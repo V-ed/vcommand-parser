@@ -1,0 +1,45 @@
+{
+  "name": "vcommander",
+  "version": "0.0.1",
+  "description": "A wrapper for the commander package that adds functionnalities such as option weight and language support",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "node src/index.ts",
+    "build": "tsc",
+    "format": "eslint --fix \"src/**/*.ts\"",
+    "lint": "eslint \"src/**/*.ts\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/V-ed/vcommander.git"
+  },
+  "keywords": [
+    "commands",
+    "options",
+    "prefix",
+    "parser"
+  ],
+  "author": {
+    "name": "Guillaume Marcoux",
+    "url": "https://github.com/V-ed"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/V-ed/vcommander/issues"
+  },
+  "homepage": "https://github.com/V-ed/vcommander#readme",
+  "devDependencies": {
+    "@types/node": "^14.0.11",
+    "@typescript-eslint/eslint-plugin": "^3.1.0",
+    "@typescript-eslint/parser": "^3.1.0",
+    "eslint": "^7.2.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  }
+}

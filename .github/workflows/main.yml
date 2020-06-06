@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, dev ]
+  pull_request:
+    branches: [ master, dev ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1.1.0
+      with:
+        node-version: '12.x'
+        
+    - name: Install
+      run: npm ci
+        
+    - name: Lint
+      run: npm run lint
+      
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1.1.0
+      with:
+        node-version: '12.x'
+        
+    - name: Install
+      run: npm ci
+        
+    - name: Build
+      run: npm run build
