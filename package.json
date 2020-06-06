@@ -1,7 +1,7 @@
 {
   "name": "vcommander",
   "version": "0.0.1",
-  "description": "A wrapper for the commander package that adds functionnalities such as option weight and language support",
+  "description": "node.js string parser to deal with command-like messages",
   "main": "src/index.ts",
   "scripts": {
     "start": "node src/index.ts",
