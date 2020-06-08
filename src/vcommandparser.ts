@@ -1,14 +1,14 @@
 import parseMessage from './message-parser';
 
-export const DEFAULT_COMMAND_PREFIX = '!';
-
 export class VCommandParser {
+	static readonly DEFAULT_COMMAND_PREFIX = '!';
+	
 	readonly message: string;
 	
 	readonly command?: string;
 	readonly content?: string;
 	
-	constructor(message: string, prefix = DEFAULT_COMMAND_PREFIX) {
+	constructor(message: string, prefix = VCommandParser.DEFAULT_COMMAND_PREFIX) {
 		this.message = message;
 		
 		({command: this.command, content: this.content} = parseMessage(this.message, prefix));
