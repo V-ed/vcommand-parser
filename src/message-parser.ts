@@ -8,16 +8,16 @@ function extractCommandAndContent(message: string, commandPrefix: string) {
 	const isCommand = message.startsWith(commandPrefix);
 	
 	let command = undefined;
-	let content = message;
+	let content: string | undefined = message;
 	
 	if (isCommand) {
 		const noPrefixMessage = message.slice(commandPrefix.length).trim();
 		
-		// eslint-disable-next-line no-magic-numbers
-		const splittedMessage = noPrefixMessage.replace(/\s+/g, ' ').split(/ /, 2);
+		const commandContentSeparator = ' ';
 		
-		command = splittedMessage[0];
-		content = splittedMessage[1];
+		const [first, ...rest] = noPrefixMessage.replace(/\s+/g, ' ').split(commandContentSeparator);
+		
+		[command, content] = [first, rest.length ? rest.join(commandContentSeparator) : undefined];
 	}
 	
 	return {
