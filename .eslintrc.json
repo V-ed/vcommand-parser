@@ -15,7 +15,8 @@
 	],
 	"env": {
 	  "es6": true,
-	  "node": true
+	  "node": true,
+	  "jest": true
 	},
 	"rules": {
 	  "no-trailing-spaces": ["error", { "skipBlankLines": true }],
@@ -31,7 +32,7 @@
 	  "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
 	  "no-confusing-arrow": "error",
 	  "padded-blocks": ["error", "never", { "allowSingleLineBlocks": true }],
-	  "no-magic-numbers": "warn",
+	  "no-magic-numbers": ["warn", { "ignoreArrayIndexes": true }],
 	  "eol-last": ["error", "always"],
 	  "no-lonely-if": "error",
 	  "no-underscore-dangle": "error",

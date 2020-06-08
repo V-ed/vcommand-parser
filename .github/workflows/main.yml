@@ -22,7 +22,7 @@ jobs:
     - name: Lint
       run: npm run lint
       
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     
     steps:
@@ -36,3 +36,6 @@ jobs:
         
     - name: Build
       run: npm run build
+        
+    - name: Test
+      run: npm test
