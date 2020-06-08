@@ -43,6 +43,7 @@ jobs:
   publish:
     needs: build-and-test
     runs-on: ubuntu-latest
+    if: "startsWith(github.event.head_commit.message, '[CD] Release v')"
     
     steps:
     - uses: actions/checkout@v2
@@ -54,8 +55,6 @@ jobs:
       uses: pascalgn/npm-publish-action@1.2.0
       with:
         tag_name: "v%s"
-        tag_message: "v%s"
-        commit_pattern: "^\\[CD\\] Release v(\\S+)"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
