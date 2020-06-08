@@ -2,7 +2,7 @@ import parseMessage from './message-parser';
 
 export const DEFAULT_COMMAND_PREFIX = '!';
 
-export class VCommander {
+export class VCommandParser {
 	readonly message: string;
 	
 	readonly command?: string;
