@@ -1,6 +1,6 @@
 {
   "name": "vcommand-parser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "node.js string parser to deal with command-like messages",
   "main": "src/index.ts",
   "scripts": {
