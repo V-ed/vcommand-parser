@@ -12,8 +12,5 @@ export class VCommandParser {
 		this.message = message;
 		
 		({command: this.command, content: this.content} = parseMessage(this.message, prefix));
-		
-		console.log(this.command);
-		console.log(this.content);
 	}
 }
