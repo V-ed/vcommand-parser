@@ -1,5 +1,5 @@
 export function splitSpacesExcludeQuotes(string: string): string[] {
-	const groupsRegex = /[^\s"']+|(?:")(?!")([^"]*)(?:")|(?:')(?!')([^']*)(?:')/g;
+	const groupsRegex = /[^\s"']+|"(?!")([^"]*)"|'(?!')([^']*)'/g;
 	
 	const matches: string[] = [];
 	
