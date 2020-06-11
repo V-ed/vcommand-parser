@@ -30,11 +30,10 @@
 		"no-multi-spaces": "error",
 		"no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
 		"camelcase": "error",
-		"no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
 		"brace-style": ["error", "1tbs", { "allowSingleLine": true }],
 		"no-confusing-arrow": "error",
 		"padded-blocks": ["error", "never", { "allowSingleLineBlocks": true }],
-		"no-magic-numbers": ["warn", { "ignoreArrayIndexes": true }],
+		"no-magic-numbers": ["warn", { "ignoreArrayIndexes": true, "ignore": [1] }],
 		"eol-last": ["error", "always"],
 		"no-lonely-if": "error",
 		"no-underscore-dangle": "error",
@@ -45,6 +44,8 @@
 			{ "blankLine": "any",    "prev": ["const", "let", "var"], "next": ["const", "let", "var"]},
 			{ "blankLine": "always", "prev": "directive", "next": "*" },
 			{ "blankLine": "any",    "prev": "directive", "next": "directive" }
-		]
+		],
+		"no-unused-vars": "off",
+		"@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
 	}
 }
