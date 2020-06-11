@@ -135,4 +135,29 @@ describe('default option prefix with definitions', () => {
 			});
 		});
 	});
+	
+	const optionDefinitionsMultipleCalls = [
+		new OptionDef(['l', 'long'], true, 1, 'This is my long description'),
+		new OptionDef(['s', 'short'], true, 2, 'This is my short description')
+	];
+	
+	describe('retrieving options from command parser', () => {
+		it('should retrieve long option by short call', () => {
+			const testCommander = new VCommandParser('!mycommand --long', undefined, undefined, optionDefinitionsMultipleCalls);
+			
+			const option = testCommander.getOption('l');
+			
+			expect(option).toBeDefined();
+			expect(option?.name).toBe('long');
+		});
+		
+		it('should retrieve short option by long call', () => {
+			const testCommander = new VCommandParser('!mycommand -s', undefined, undefined, optionDefinitionsMultipleCalls);
+			
+			const option = testCommander.getOption('short');
+			
+			expect(option).toBeDefined();
+			expect(option?.name).toBe('s');
+		});
+	});
 });

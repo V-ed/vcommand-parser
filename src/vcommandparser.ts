@@ -38,4 +38,8 @@ export default class VCommandParser {
 			fullContent: this.fullContent
 		} = parseMessage(this.message, commandPrefix, optionPrefix, optionDefinitions));
 	}
+	
+	getOption(name: string): MessageOption | undefined {
+		return this.options?.find(option => option.definition?.calls.includes(name) || option.name == name);
+	}
 }
