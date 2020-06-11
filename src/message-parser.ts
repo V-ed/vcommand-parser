@@ -78,7 +78,9 @@ function extractOptionsFromParsedContent(content: string, optionPrefix: OptionPr
 	function createMessageOption(option: string, index: number, nextGroup?: ParsedValue): MessageOption {
 		let content: string | undefined = undefined;
 		
-		if (nextGroup) {
+		const definition = optionsDefinitions?.find(optionDef => optionDef.calls.includes(option));
+		
+		if (nextGroup && (!definition || definition.acceptsContent)) {
 			const nextGroupOptionType = getGroupOptionType(nextGroup, optionPrefix, longOptionPrefixLength);
 			
 			if (!nextGroupOptionType) {
@@ -87,8 +89,6 @@ function extractOptionsFromParsedContent(content: string, optionPrefix: OptionPr
 				nextGroup.value = '';
 			}
 		}
-		
-		const definition = optionsDefinitions?.find(optionDef => optionDef.calls.includes(option));
 		
 		return new MessageOption(option, index, content, definition);
 	}
