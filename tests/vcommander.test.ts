@@ -1,4 +1,6 @@
-import { VCommandParser } from '../src/vcommandparser';
+/* eslint-disable no-magic-numbers */
+
+import VCommandParser from '../src/vcommandparser';
 
 describe('Basic Message Parsing', () => {
 	it('should return correct command', () => {

@@ -1,26 +1,41 @@
 import OptionPrefix from './@types/OptionPrefix';
+import MessageOption from './message-option';
 import parseMessage from './message-parser';
+import OptionDef from './option-def';
 
-export class VCommandParser {
+export default class VCommandParser {
 	static readonly DEFAULT_COMMAND_PREFIX = '!';
 	static readonly DEFAULT_OPTION_PREFIX = '-';
+	
+	readonly isCommand: boolean;
 	
 	readonly message: string;
 	
 	readonly command?: string;
 	readonly content?: string;
 	
-	readonly prefix: string;
+	readonly commandPrefix: string;
 	readonly optionPrefix: OptionPrefix;
 	
-	constructor(message: string, prefix = VCommandParser.DEFAULT_COMMAND_PREFIX, optionPrefix: OptionPrefix = VCommandParser.DEFAULT_OPTION_PREFIX) {
+	readonly optionDefinitions?: OptionDef[];
+	
+	readonly options?: MessageOption[];
+	readonly duplicatedOptions?: MessageOption[];
+	readonly fullContent?: string;
+	
+	constructor(message: string, commandPrefix = VCommandParser.DEFAULT_COMMAND_PREFIX, optionPrefix: OptionPrefix = VCommandParser.DEFAULT_OPTION_PREFIX, optionDefinitions?: OptionDef[]) {
 		this.message = message;
-		this.prefix = prefix;
+		this.commandPrefix = commandPrefix;
 		this.optionPrefix = optionPrefix;
+		this.optionDefinitions = optionDefinitions;
 		
 		({
+			isCommand: this.isCommand,
 			command: this.command,
-			content: this.content
-		} = parseMessage(this.message, prefix));
+			content: this.content,
+			options: this.options,
+			duplicatedOptions: this.duplicatedOptions,
+			fullContent: this.fullContent
+		} = parseMessage(this.message, commandPrefix, optionPrefix, optionDefinitions));
 	}
 }
