@@ -53,6 +53,6 @@
     "typescript": "^3.9.5"
   },
   "dependencies": {
-    "quoted-string-space-split": "0.0.2"
+    "quoted-string-space-split": "^0.1.0"
   }
 }
