@@ -114,30 +114,32 @@ export function extractOptionsFromParsedContent(content: string, optionPrefix: O
 		
 		const groupOptionType = getGroupOptionType(group, optionPrefix, longOptionPrefixLength);
 		
-		if (groupOptionType == 'stopper') {
-			isOptionParseStopped = true;
-			return parsedContent;
-		}
-		
-		if (groupOptionType == 'long') {
-			const longOption = group.value.slice(optionPrefix.length * longOptionPrefixLength);
+		if (groupOptionType) {
+			if (groupOptionType == 'stopper') {
+				isOptionParseStopped = true;
+				return parsedContent;
+			}
 			
-			handleOptionCreation(longOption, index, groups[index + 1]);
-			
-			return parsedContent;
-		}
-		
-		if (groupOptionType == 'short') {
-			const shortOptions = group.value.slice(optionPrefix.length).split('');
-			
-			shortOptions.forEach((shortOption, shortOptionIndex, array) => {
-				// Only allow dealing with next group on last short option
-				const nextGroup = shortOptionIndex == array.length - 1 ? groups[index + 1] : undefined;
+			if (groupOptionType == 'long') {
+				const longOption = group.value.slice(optionPrefix.length * longOptionPrefixLength);
 				
-				handleOptionCreation(shortOption, index, nextGroup);
-			});
+				handleOptionCreation(longOption, index, groups[index + 1]);
+				
+				return parsedContent;
+			}
 			
-			return parsedContent;
+			if (groupOptionType == 'short') {
+				const shortOptions = group.value.slice(optionPrefix.length).split('');
+				
+				shortOptions.forEach((shortOption, shortOptionIndex, array) => {
+					// Only allow dealing with next group on last short option
+					const nextGroup = shortOptionIndex == array.length - 1 ? groups[index + 1] : undefined;
+					
+					handleOptionCreation(shortOption, index, nextGroup);
+				});
+				
+				return parsedContent;
+			}
 		}
 		
 		return parsedContent.concat(' ', group.value);
