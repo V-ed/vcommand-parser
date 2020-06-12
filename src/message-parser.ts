@@ -14,10 +14,10 @@ export type ParsedMessage = {
 
 export { parseMessage };
 
-export default function parseMessage(message: string, commandPrefix: string, optionPrefix: OptionPrefix, optionDefinitions?: OptionDef[]): ParsedMessage {
+export default function parseMessage(message: string, commandPrefix: string, optionPrefix: OptionPrefix, optionDefinitions?: OptionDef[], isLazy = false): ParsedMessage {
 	const extractedData = extractCommandAndContent(message, commandPrefix);
 	
-	const extractedOptions: ParsedOptions | Record<string, unknown> = extractedData.content ? extractOptionsFromParsedContent(extractedData.content, optionPrefix, optionDefinitions) : {};
+	const extractedOptions: ParsedOptions | Record<string, unknown> = !isLazy && extractedData.content ? extractOptionsFromParsedContent(extractedData.content, optionPrefix, optionDefinitions) : {};
 	
 	const parsedMessage = {
 		fullContent: extractedData.content,
@@ -47,13 +47,13 @@ function extractCommandAndContent(message: string, commandPrefix: string) {
 	return { isCommand, command, content };
 }
 
-type ParsedOptions = {
+export type ParsedOptions = {
 	content: string;
 	options: MessageOption[];
 	duplicatedOptions: MessageOption[];
 }
 
-function extractOptionsFromParsedContent(content: string, optionPrefix: OptionPrefix, optionDefinitions?: OptionDef[]): ParsedOptions {
+export function extractOptionsFromParsedContent(content: string, optionPrefix: OptionPrefix, optionDefinitions?: OptionDef[]): ParsedOptions {
 	const groups = splitSpacesExcludeQuotesDetailed(content);
 	
 	const options: MessageOption[] = [];
