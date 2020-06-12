@@ -1,16 +1,16 @@
-/* eslint-disable no-magic-numbers */
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 
 import OptionDef from '../src/option-def';
 import VCommandParser from '../src/vcommandparser';
 
 const optionDefinitions = [
-	new OptionDef('long', true, 1, 'This is my long description'),
-	new OptionDef('s', true, 1, 'This is my short description')
+	new OptionDef('long', true, 'This is my long description'),
+	new OptionDef('s', true, 'This is my short description')
 ];
 
 const optionDefinitionsNoContent = [
-	new OptionDef('long', false, 1, 'This is my long description'),
-	new OptionDef('s', false, 1, 'This is my short description')
+	new OptionDef('long', false, 'This is my long description'),
+	new OptionDef('s', false, 'This is my short description')
 ];
 
 describe('default option prefix with definitions', () => {
@@ -137,8 +137,8 @@ describe('default option prefix with definitions', () => {
 	});
 	
 	const optionDefinitionsMultipleCalls = [
-		new OptionDef(['l', 'long'], true, 1, 'This is my long description'),
-		new OptionDef(['s', 'short'], true, 2, 'This is my short description')
+		new OptionDef(['l', 'long'], true, 'This is my long description', 1),
+		new OptionDef(['s', 'short'], true, 'This is my short description', 2)
 	];
 	
 	describe('retrieving options from command parser', () => {
