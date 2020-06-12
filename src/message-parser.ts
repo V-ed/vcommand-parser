@@ -14,10 +14,10 @@ export type ParsedMessage = {
 
 export { parseMessage };
 
-export default function parseMessage(message: string, commandPrefix: string, optionPrefix: OptionPrefix, optionsDefinitions?: OptionDef[]): ParsedMessage {
+export default function parseMessage(message: string, commandPrefix: string, optionPrefix: OptionPrefix, optionDefinitions?: OptionDef[]): ParsedMessage {
 	const extractedData = extractCommandAndContent(message, commandPrefix);
 	
-	const extractedOptions: ParsedOptions | Record<string, unknown> = extractedData.content ? extractOptionsFromParsedContent(extractedData.content, optionPrefix, optionsDefinitions) : {};
+	const extractedOptions: ParsedOptions | Record<string, unknown> = extractedData.content ? extractOptionsFromParsedContent(extractedData.content, optionPrefix, optionDefinitions) : {};
 	
 	const parsedMessage = {
 		fullContent: extractedData.content,
@@ -53,7 +53,7 @@ type ParsedOptions = {
 	duplicatedOptions: MessageOption[];
 }
 
-function extractOptionsFromParsedContent(content: string, optionPrefix: OptionPrefix, optionsDefinitions?: OptionDef[]): ParsedOptions {
+function extractOptionsFromParsedContent(content: string, optionPrefix: OptionPrefix, optionDefinitions?: OptionDef[]): ParsedOptions {
 	const groups = splitSpacesExcludeQuotesDetailed(content);
 	
 	const options: MessageOption[] = [];
@@ -80,7 +80,7 @@ function extractOptionsFromParsedContent(content: string, optionPrefix: OptionPr
 	function createMessageOption(option: string, index: number, nextGroup?: ParsedValue): MessageOption {
 		let content: string | undefined = undefined;
 		
-		const definition = optionsDefinitions?.find(optionDef => optionDef.calls.includes(option));
+		const definition = optionDefinitions?.find(optionDef => optionDef.calls.includes(option));
 		
 		if (nextGroup && (!definition || definition.acceptsContent)) {
 			const nextGroupOptionType = getGroupOptionType(nextGroup, optionPrefix, longOptionPrefixLength);
