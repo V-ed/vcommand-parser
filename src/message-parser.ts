@@ -3,7 +3,7 @@ import OptionPrefix from './@types/OptionPrefix';
 import MessageOption from './message-option';
 import OptionDef from './option-def';
 
-type ParsedMessage = {
+export type ParsedMessage = {
 	isCommand: boolean;
 	command?: string;
 	fullContent?: string;
@@ -11,6 +11,8 @@ type ParsedMessage = {
 	options?: MessageOption[];
 	duplicatedOptions?: MessageOption[];
 }
+
+export { parseMessage };
 
 export default function parseMessage(message: string, commandPrefix: string, optionPrefix: OptionPrefix, optionsDefinitions?: OptionDef[]): ParsedMessage {
 	const extractedData = extractCommandAndContent(message, commandPrefix);
@@ -141,5 +143,9 @@ function extractOptionsFromParsedContent(content: string, optionPrefix: OptionPr
 		return parsedContent.concat(' ', group.value);
 	}, '').trim();
 	
-	return {content: extractedContent, options: options, duplicatedOptions: duplicatedOptions};
+	return {
+		content: extractedContent,
+		options: options,
+		duplicatedOptions: duplicatedOptions
+	};
 }
