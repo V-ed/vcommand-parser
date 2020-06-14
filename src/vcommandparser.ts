@@ -3,6 +3,8 @@ import MessageOption from './message-option';
 import { extractOptionsFromParsedContent, ParsedMessage, parseMessage } from './message-parser';
 import OptionDef from './option-def';
 
+export { VCommandParser };
+
 export default class VCommandParser {
 	static readonly DEFAULT_COMMAND_PREFIX = '!';
 	static readonly DEFAULT_OPTION_PREFIX = '-';
