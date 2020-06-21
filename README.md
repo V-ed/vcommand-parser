@@ -129,7 +129,7 @@ VParsedCommand {
 }
 ```
 
-Note in this example : since `"option content"` has a space in it's content, you must pad the content with double or single quotes (`"` or `'`). This quoting behavior is handled by the package [quoted-string-space-split](https://www.npmjs.com/package/quoted-string-space-split).
+Note in this example : since `"option content"` has a space in its content, you must pad the content with double or single quotes (`"` or `'`). This quoting behavior is handled by the package [quoted-string-space-split](https://www.npmjs.com/package/quoted-string-space-split).
 
 ### Accessing options
 
