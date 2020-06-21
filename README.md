@@ -252,6 +252,65 @@ console.log(parsedCommand);
 
 The variable `parsedCommand` will therefore contain the same definitions as if you didn't do it lazy.
 
+## Usage for strings / messages that are not commands
+
+This package automatically determines if the given string is a command or not based on if the messages starts with the given command prefix.
+
+```typescript
+import VCommandParser from 'vcommand-parser';
+
+const parsedCommand = VCommandParser.parse('this is a message');
+
+console.log(parsedCommand);
+```
+
+```javascript
+VParsedCommand {
+  message: 'this is a message',
+  commandPrefix: '!',
+  optionPrefix: '-',
+  optionDefinitions: undefined,
+  isCommand: false,
+  command: undefined,
+  content: 'this is a message',
+  options: [],
+  duplicatedOptions: [],
+  fullContent: 'this is a message'
+}
+```
+
+However, the logic to parse options is still applied :
+
+```typescript
+import VCommandParser from 'vcommand-parser';
+
+const parsedCommand = VCommandParser.parse('this is --a message');
+
+console.log(parsedCommand);
+```
+
+```javascript
+VParsedCommand {
+  message: 'this is --a message',
+  commandPrefix: '!',
+  optionPrefix: '-',
+  optionDefinitions: undefined,
+  isCommand: false,
+  command: undefined,
+  content: 'this is',
+  options: [
+    MessageOption {
+      name: 'a',
+      content: 'message',
+      position: 2,
+      definition: undefined
+    }
+  ],
+  duplicatedOptions: [],
+  fullContent: 'this is --a message'
+}
+```
+
 ## Author
 
 - Guillaume Marcoux ([V-ed](https://github.com/V-ed)) - Owner
