@@ -15,6 +15,16 @@ const optionDefinitionsNoContent = [
 
 describe('default option prefix with definitions', () => {
 	describe('Messages with basic options', () => {
+		describe('no content', () => {
+			it('should not have options', () => {
+				const parsed = VCommandParser.parseLazy('!mycommand');
+				
+				parsed.setOptionDefinitions(optionDefinitions);
+				
+				expect(parsed.options).toBeUndefined();
+			});
+		});
+		
 		describe('options do accept', () => {
 			it('should contain one defined long option', () => {
 				const parsed = VCommandParser.parseLazy('!mycommand --long');
