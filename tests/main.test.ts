@@ -29,3 +29,24 @@ describe('Basic Message Parsing', () => {
 		expect(parsed.content).toBe('my content');
 	});
 });
+
+describe('Testing VParsedCommand basic functions', () => {
+	describe('getOption function', () => {
+		it('should return undefined when no option', () => {
+			const parsed = VCommandParser.parse('!mycommand');
+			
+			const option = parsed.getOption('option');
+			
+			expect(option).toBeUndefined();
+		});
+		
+		it('should return undefined when option not in request', () => {
+			const parsed = VCommandParser.parse('!mycommand --option');
+			
+			const option = parsed.getOption('stuff');
+			
+			expect(option).toBeUndefined();
+		});
+	});
+});
+
