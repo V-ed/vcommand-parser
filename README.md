@@ -120,7 +120,7 @@ VParsedCommand {
     MessageOption {
       name: 'option',
       content: 'option content',
-      position: 1,
+      position: 0,
       definition: undefined
     }
   ],
@@ -149,7 +149,7 @@ The variable `option` therefore contains this :
 MessageOption {
   name: 'option',
   content: 'option content',
-  position: 1,
+  position: 0,
   definition: undefined
 }
 ```
@@ -209,7 +209,7 @@ VParsedCommand {
     MessageOption {
       name: 'l',
       content: 'option content',
-      position: 1,
+      position: 0,
       definition: OptionDef {
         calls: [ 'l', 'long' ],
         acceptsContent: true,
@@ -302,7 +302,7 @@ VParsedCommand {
     MessageOption {
       name: 'a',
       content: 'message',
-      position: 2,
+      position: 0,
       definition: undefined
     }
   ],
