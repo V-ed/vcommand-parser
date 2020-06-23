@@ -77,7 +77,7 @@ export function extractOptionsFromParsedContent(content: string, optionPrefix: O
 		return false;
 	}
 	
-	function createMessageOption(option: string, index: number, nextGroup?: ParsedValue): MessageOption {
+	function createMessageOption(option: string, position: number, nextGroup?: ParsedValue): MessageOption {
 		let content: string | undefined = undefined;
 		
 		const definition = optionDefinitions?.find(optionDef => optionDef.calls.includes(option));
@@ -92,7 +92,7 @@ export function extractOptionsFromParsedContent(content: string, optionPrefix: O
 			}
 		}
 		
-		return new MessageOption(option, index, content, definition);
+		return new MessageOption(option, position, content, definition);
 	}
 	
 	function handleOptionCreation(optionName: string, index: number, nextGroup?: ParsedValue) {
@@ -102,6 +102,8 @@ export function extractOptionsFromParsedContent(content: string, optionPrefix: O
 		
 		isOptionDuplicated ? duplicatedOptions.push(newOption) : options.push(newOption);
 	}
+	
+	let optionPosition = 0;
 	
 	const extractedContent = groups.reduce((parsedContent, group, index, groups) => {
 		if (!group.value) {
@@ -123,7 +125,7 @@ export function extractOptionsFromParsedContent(content: string, optionPrefix: O
 			if (groupOptionType == 'long') {
 				const longOption = group.value.slice(optionPrefix.length * longOptionPrefixLength);
 				
-				handleOptionCreation(longOption, index, groups[index + 1]);
+				handleOptionCreation(longOption, optionPosition++, groups[index + 1]);
 				
 				return parsedContent;
 			}
@@ -135,7 +137,7 @@ export function extractOptionsFromParsedContent(content: string, optionPrefix: O
 					// Only allow dealing with next group on last short option
 					const nextGroup = shortOptionIndex == array.length - 1 ? groups[index + 1] : undefined;
 					
-					handleOptionCreation(shortOption, index, nextGroup);
+					handleOptionCreation(shortOption, optionPosition++, nextGroup);
 				});
 				
 				return parsedContent;
