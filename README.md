@@ -156,7 +156,7 @@ MessageOption {
 
 ## Usage with Option Definitions
 
-This package allows to define options so that you can have option aliases, descriptions, and even custom behavior ("such as does the option accepts content?").
+This package allows to define options so that you can have option aliases, descriptions, and even custom behavior (such as "does the option accepts content?").
 
 This is achieved using the `OptionDef` class. This class has 4 parameters, with only one required :
 
