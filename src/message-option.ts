@@ -14,8 +14,4 @@ export default class MessageOption {
 		this.position = position;
 		this.definition = definition;
 	}
-	
-	setDefinition(definition: OptionDef): void {
-		(this.definition as OptionDef) = definition;
-	}
 }
