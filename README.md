@@ -245,7 +245,15 @@ const definitions = [
 
 const parsedCommand = VCommandParser.parseLazy('!command content -l "option content"');
 
+console.log(parsedCommand.command); // 'command'
+console.log(parsedCommand.content); // 'content -l "option content"'
+console.log(parsedCommand.options); // undefined
+
 parsedCommand.setOptionDefinitions(definitions);
+
+console.log(parsedCommand.command); // 'command'
+console.log(parsedCommand.content); // 'content'
+console.log(parsedCommand.options); // MessageOption[]
 
 console.log(parsedCommand);
 ```
