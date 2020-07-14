@@ -65,9 +65,9 @@ export class VParsedCommand {
 			const parsedOptions = extractOptionsFromParsedContent(this.fullContent, this.optionPrefix, optionDefinitions);
 			
 			({
-				content: (this.content as string),
-				options: (this.options as MessageOption[]),
-				duplicatedOptions: (this.duplicatedOptions as MessageOption[]),
+				content: (this.content as string | undefined),
+				options: (this.options as MessageOption[] | undefined),
+				duplicatedOptions: (this.duplicatedOptions as MessageOption[] | undefined),
 			} = parsedOptions);
 		}
 	}
