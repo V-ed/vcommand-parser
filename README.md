@@ -90,7 +90,7 @@ VParsedCommand {
       definition: undefined
     }
   ],
-  duplicatedOptions: [],
+  duplicatedOptions: undefined,
   fullContent: '--option'
 }
 ```
@@ -124,7 +124,7 @@ VParsedCommand {
       definition: undefined
     }
   ],
-  duplicatedOptions: [],
+  duplicatedOptions: undefined,
   fullContent: 'content --option "option content"'
 }
 ```
@@ -218,7 +218,7 @@ VParsedCommand {
       }
     }
   ],
-  duplicatedOptions: [],
+  duplicatedOptions: undefined,
   fullContent: 'content -l "option content"'
 }
 ```
@@ -273,13 +273,13 @@ VParsedCommand {
   isCommand: false,
   command: undefined,
   content: 'this is a message',
-  options: [],
-  duplicatedOptions: [],
+  options: undefined,
+  duplicatedOptions: undefined,
   fullContent: 'this is a message'
 }
 ```
 
-However, the logic to parse options is still applied :
+When the message is not a command, options aren't parsed :
 
 ```typescript
 import VCommandParser from 'vcommand-parser';
@@ -297,16 +297,9 @@ VParsedCommand {
   optionDefinitions: undefined,
   isCommand: false,
   command: undefined,
-  content: 'this is',
-  options: [
-    MessageOption {
-      name: 'a',
-      content: 'message',
-      position: 0,
-      definition: undefined
-    }
-  ],
-  duplicatedOptions: [],
+  content: 'this is --a message',
+  options: undefined,
+  duplicatedOptions: undefined,
   fullContent: 'this is --a message'
 }
 ```

@@ -17,7 +17,7 @@ export { parseMessage };
 export default function parseMessage(message: string, commandPrefix: string, optionPrefix: OptionPrefix, optionDefinitions?: OptionDef[], isLazy = false): ParsedMessage {
 	const extractedData = extractCommandAndContent(message, commandPrefix);
 	
-	const extractedOptions: ParsedOptions | Record<string, unknown> = !isLazy && extractedData.content ? extractOptionsFromParsedContent(extractedData.content, optionPrefix, optionDefinitions) : {};
+	const extractedOptions: ParsedOptions | Record<string, unknown> = extractedData.isCommand && !isLazy && extractedData.content ? extractOptionsFromParsedContent(extractedData.content, optionPrefix, optionDefinitions) : {};
 	
 	const parsedMessage = {
 		fullContent: extractedData.content,
