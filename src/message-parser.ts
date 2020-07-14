@@ -49,8 +49,8 @@ function extractCommandAndContent(message: string, commandPrefix: string) {
 
 export type ParsedOptions = {
 	content: string;
-	options: MessageOption[];
-	duplicatedOptions: MessageOption[];
+	options?: MessageOption[];
+	duplicatedOptions?: MessageOption[];
 }
 
 export function extractOptionsFromParsedContent(content: string, optionPrefix: OptionPrefix, optionDefinitions?: OptionDef[]): ParsedOptions {
@@ -149,7 +149,7 @@ export function extractOptionsFromParsedContent(content: string, optionPrefix: O
 	
 	return {
 		content: extractedContent,
-		options: options,
-		duplicatedOptions: duplicatedOptions
+		options: options.length ? options : undefined,
+		duplicatedOptions: duplicatedOptions.length ? duplicatedOptions : undefined
 	};
 }
