@@ -61,13 +61,13 @@ export function extractOptionsFromParsedContent(content: string, optionPrefix: O
 	
 	const longOptionPrefixLength = 2;
 	
-	let isOptionParseStopped = false;
-	
 	function getGroupOptionType(group: ParsedValue, optionPrefix: OptionPrefix, longOptionPrefixLength: number): false | 'long' | 'short' | 'stopper' {
 		if (group.type == 'plain') {
-			if (group.value == `${optionPrefix}${optionPrefix}`) {
+			const longOptionPrefix = optionPrefix.repeat(longOptionPrefixLength);
+			
+			if (group.value == longOptionPrefix) {
 				return 'stopper';
-			} else if (group.value.startsWith(optionPrefix.repeat(longOptionPrefixLength))) {
+			} else if (group.value.startsWith(longOptionPrefix)) {
 				return 'long';
 			} else if (group.value.startsWith(optionPrefix)) {
 				return 'short';
@@ -104,6 +104,8 @@ export function extractOptionsFromParsedContent(content: string, optionPrefix: O
 	}
 	
 	let optionPosition = 0;
+	
+	let isOptionParseStopped = false;
 	
 	const extractedContent = groups.reduce((parsedContent, group, index, groups) => {
 		if (!group.value) {
