@@ -48,7 +48,7 @@ function extractCommandAndContent(message: string, commandPrefix: string) {
 }
 
 export type ParsedOptions = {
-	content: string;
+	content?: string;
 	options?: MessageOption[];
 	duplicatedOptions?: MessageOption[];
 }
@@ -148,7 +148,7 @@ export function extractOptionsFromParsedContent(content: string, optionPrefix: O
 	}, '').trim();
 	
 	return {
-		content: extractedContent,
+		content: extractedContent || undefined,
 		options: options.length ? options : undefined,
 		duplicatedOptions: duplicatedOptions.length ? duplicatedOptions : undefined
 	};

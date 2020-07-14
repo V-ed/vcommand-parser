@@ -81,7 +81,7 @@ VParsedCommand {
   optionDefinitions: undefined,
   isCommand: true,
   command: 'command',
-  content: '',
+  content: undefined,
   options: [
     MessageOption {
       name: 'option',
