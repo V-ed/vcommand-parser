@@ -1,7 +1,7 @@
 # VCommandParser
 
 ![CI/CD](https://github.com/V-ed/vcommand-parser/workflows/CI/CD/badge.svg)
-![npm](https://img.shields.io/npm/v/vcommand-parser)
+[![npm](https://img.shields.io/npm/v/vcommand-parser)](https://www.npmjs.com/package/vcommand-parser)
 [![Coverage Status](https://coveralls.io/repos/github/V-ed/vcommand-parser/badge.svg?branch=master)](https://coveralls.io/github/V-ed/vcommand-parser?branch=master)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/vcommand-parser?label=install%20size)
 
