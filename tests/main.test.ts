@@ -125,6 +125,14 @@ describe('Non-lazy parsing', () => {
 			expect(parsed.options).toBeUndefined();
 			expect(parsed.content).toBe('this is --a message');
 		});
+		
+		it('should parse message and not parse as a command if there is a space between prefix and command', () => {
+			const parsed = VCommandParser.parse('! not a command');
+			
+			expect(parsed.isCommand).toBeFalsy();
+			expect(parsed.command).toBeUndefined();
+			expect(parsed.content).toBe('! not a command');
+		});
 	});
 });
 
@@ -266,6 +274,14 @@ describe('Lazy parsing', () => {
 			
 			expect(parsed.options).toBeUndefined();
 			expect(parsed.content).toBe('this is --a message');
+		});
+		
+		it('should parse message and not parse as a command if there is a space between prefix and command', () => {
+			const parsed = VCommandParser.parseLazy('! not a command');
+			
+			expect(parsed.isCommand).toBeFalsy();
+			expect(parsed.command).toBeUndefined();
+			expect(parsed.content).toBe('! not a command');
 		});
 	});
 });

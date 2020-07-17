@@ -29,19 +29,25 @@ export default function parseMessage(message: string, commandPrefix: string, opt
 }
 
 function extractCommandAndContent(message: string, commandPrefix: string) {
-	const isCommand = message.startsWith(commandPrefix);
+	let isCommand = message.startsWith(commandPrefix);
 	
-	let command = undefined;
+	let command: string | undefined = undefined;
 	let content: string | undefined = message;
 	
 	if (isCommand) {
-		const noPrefixMessage = message.slice(commandPrefix.length).trim();
+		const noPrefixMessage = message.slice(commandPrefix.length).trimEnd();
 		
 		const commandContentSeparator = ' ';
 		
 		const [first, ...rest] = noPrefixMessage.replace(/\s+/g, ' ').split(commandContentSeparator);
 		
-		[command, content] = [first, rest.length ? rest.join(commandContentSeparator) : undefined];
+		if (!(first?.length)) {
+			isCommand = false;
+			command = undefined;
+			content = message;
+		} else {
+			[command, content] = [first, rest.length ? rest.join(commandContentSeparator) : undefined];
+		}
 	}
 	
 	return { isCommand, command, content };
