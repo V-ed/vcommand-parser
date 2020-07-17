@@ -38,7 +38,7 @@ describe('Non-lazy parsing', () => {
 	});
 	
 	describe('Testing VParsedCommand basic functions', () => {
-		describe('getOption function', () => {
+		describe('getOption function with string', () => {
 			it('should return undefined when no option', () => {
 				const parsed = VCommandParser.parse('!mycommand');
 				
@@ -49,10 +49,64 @@ describe('Non-lazy parsing', () => {
 			
 			it('should return undefined when option not in request', () => {
 				const parsed = VCommandParser.parse('!mycommand --option');
-			
+				
 				const option = parsed.getOption('stuff');
-			
+				
 				expect(option).toBeUndefined();
+			});
+			
+			it('should return option with correct name', () => {
+				const parsed = VCommandParser.parse('!mycommand --option');
+				
+				const option = parsed.getOption('option');
+				
+				expect(option).toBeDefined();
+				expect(option!.name).toBe('option');
+			});
+			
+			it('should return option with correct name despite multiple options', () => {
+				const parsed = VCommandParser.parse('!mycommand --option1 --option2');
+				
+				const option = parsed.getOption('option2');
+				
+				expect(option).toBeDefined();
+				expect(option!.name).toBe('option2');
+			});
+		});
+		
+		describe('getOption function with number', () => {
+			it('should return undefined when no option', () => {
+				const parsed = VCommandParser.parse('!mycommand');
+				
+				const option = parsed.getOption(1);
+				
+				expect(option).toBeUndefined();
+			});
+			
+			it('should return undefined when no option with position', () => {
+				const parsed = VCommandParser.parse('!mycommand --option');
+				
+				const option = parsed.getOption(2);
+				
+				expect(option).toBeUndefined();
+			});
+			
+			it('should return option with correct position', () => {
+				const parsed = VCommandParser.parse('!mycommand --option');
+				
+				const option = parsed.getOption(0);
+				
+				expect(option).toBeDefined();
+				expect(option!.name).toBe('option');
+			});
+			
+			it('should return option with correct position despite multiple options', () => {
+				const parsed = VCommandParser.parse('!mycommand --option1 --option2');
+				
+				const option = parsed.getOption(1);
+				
+				expect(option).toBeDefined();
+				expect(option!.name).toBe('option2');
 			});
 		});
 	});
@@ -109,10 +163,12 @@ describe('Lazy parsing', () => {
 		});
 	});
 	
-	describe('Testing VParsedCommand basic functions', () => {
-		describe('getOption function', () => {
+	describe('Testing VLazyParsedCommand basic functions', () => {
+		describe('getOption function with string', () => {
 			it('should return undefined when no option', () => {
 				const parsed = VCommandParser.parseLazy('!mycommand');
+				
+				parsed.doParseOptions();
 				
 				const option = parsed.getOption('option');
 				
@@ -121,10 +177,78 @@ describe('Lazy parsing', () => {
 			
 			it('should return undefined when option not in request', () => {
 				const parsed = VCommandParser.parseLazy('!mycommand --option');
-			
+				
+				parsed.doParseOptions();
+				
 				const option = parsed.getOption('stuff');
-			
+				
 				expect(option).toBeUndefined();
+			});
+			
+			it('should return option with correct name', () => {
+				const parsed = VCommandParser.parseLazy('!mycommand --option');
+				
+				parsed.doParseOptions();
+				
+				const option = parsed.getOption('option');
+				
+				expect(option).toBeDefined();
+				expect(option!.name).toBe('option');
+			});
+			
+			it('should return option with correct name despite multiple options', () => {
+				const parsed = VCommandParser.parseLazy('!mycommand --option1 --option2');
+				
+				parsed.doParseOptions();
+				
+				const option = parsed.getOption('option2');
+				
+				expect(option).toBeDefined();
+				expect(option!.name).toBe('option2');
+			});
+		});
+		
+		describe('getOption function with number', () => {
+			it('should return undefined when no option', () => {
+				const parsed = VCommandParser.parseLazy('!mycommand');
+				
+				parsed.doParseOptions();
+				
+				const option = parsed.getOption(1);
+				
+				expect(option).toBeUndefined();
+			});
+			
+			it('should return undefined when no option with position', () => {
+				const parsed = VCommandParser.parseLazy('!mycommand --option');
+				
+				parsed.doParseOptions();
+				
+				const option = parsed.getOption(2);
+				
+				expect(option).toBeUndefined();
+			});
+			
+			it('should return option with correct position', () => {
+				const parsed = VCommandParser.parseLazy('!mycommand --option');
+				
+				parsed.doParseOptions();
+				
+				const option = parsed.getOption(0);
+				
+				expect(option).toBeDefined();
+				expect(option!.name).toBe('option');
+			});
+			
+			it('should return option with correct position despite multiple options', () => {
+				const parsed = VCommandParser.parseLazy('!mycommand --option1 --option2');
+				
+				parsed.doParseOptions();
+				
+				const option = parsed.getOption(1);
+				
+				expect(option).toBeDefined();
+				expect(option!.name).toBe('option2');
 			});
 		});
 	});

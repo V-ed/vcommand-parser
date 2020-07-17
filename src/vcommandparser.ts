@@ -55,8 +55,14 @@ export class VParsedCommand {
 		} = parsedMessage);
 	}
 	
-	getOption(name: string): MessageOption | undefined {
-		return this.options?.find(option => option.definition?.calls.includes(name) || option.name == name);
+	getOption(search: string | number): MessageOption | undefined {
+		return this.options?.find(option => {
+			if (typeof search == 'string') {
+				return option.definition?.calls.includes(search) || option.name == search;
+			} else {
+				return option.position == search;
+			}
+		});
 	}
 	
 	setOptionDefinitions(optionDefinitions: OptionDef[]): void {
