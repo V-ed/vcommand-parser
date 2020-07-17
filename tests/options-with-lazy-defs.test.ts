@@ -4,13 +4,13 @@ import OptionDef from '../src/option-def';
 import VCommandParser from '../src/vcommandparser';
 
 const optionDefinitions = [
-	new OptionDef('long', true, 'This is my long description'),
-	new OptionDef('s', true, 'This is my short description')
+	new OptionDef('long', {description: 'This is my long description', acceptsContent: true}),
+	new OptionDef('s', {description: 'This is my short description', acceptsContent: true})
 ];
 
 const optionDefinitionsNoContent = [
-	new OptionDef('long', false, 'This is my long description'),
-	new OptionDef('s', false, 'This is my short description')
+	new OptionDef('long', {description: 'This is my long description', acceptsContent: false}),
+	new OptionDef('s', {description: 'This is my short description', acceptsContent: false})
 ];
 
 describe('default option prefix with definitions', () => {
@@ -163,8 +163,8 @@ describe('default option prefix with definitions', () => {
 	});
 	
 	const optionDefinitionsMultipleCalls = [
-		new OptionDef(['l', 'long'], true, 'This is my long description', 1),
-		new OptionDef(['s', 'short'], true, 'This is my short description', 2)
+		new OptionDef(['l', 'long'], {description: 'This is my long description', acceptsContent: true, weight: 1}),
+		new OptionDef(['s', 'short'], {description: 'This is my short description', acceptsContent: true, weight: 2})
 	];
 	
 	describe('retrieving options from command parser', () => {
