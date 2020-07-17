@@ -158,10 +158,14 @@ MessageOption {
 
 This package allows to define options so that you can have option aliases, descriptions, and even custom behavior (such as "does the option accepts content?").
 
-This is achieved using the `OptionDef` class. This class has 4 parameters, with only one required :
+This is achieved using the `OptionDef` class. This class has 2 parameters, where the second parameter is optional parameters that defines the option :
 
 ```typescript
-new OptionDef(calls: string | string[], acceptsContent = true, description?: string, weight?: number)
+new OptionDef(calls: string | string[], options?: {
+  description: string | undefined,
+  acceptsContent: boolean, // defaults to true
+  weight: number // defaults to `OptionDef.DEFAULT_WEIGHT` (0)
+})
 ```
 
 There are two main ways of defining option definitions : at the parsing stage or in a lazy way :
@@ -172,8 +176,8 @@ There are two main ways of defining option definitions : at the parsing stage or
 import { VCommandParser, OptionDef } from 'vcommand-parser';
 
 const definitions = [
-  new OptionDef(['l', 'long'], true, 'This is my long description', 1),
-  new OptionDef(['s', 'short'], true, 'This is my short description', 2)
+  new OptionDef(['l', 'long'], {description: 'This is my long description', weight: 1}),
+  new OptionDef(['s', 'short'], {description: 'This is my short description', weight: 2})
 ];
 
 const parsedCommand = VCommandParser.parse('!command content -l "option content"', undefined, undefined, definitions);
@@ -228,7 +232,7 @@ The definition is linked to the parsed option, which is useful if you need to ac
 This definition also allows you to define multiple possible calls for the option, so in the previous example, it wouldn't matter if you used `-l` or `--long`, as the definition defines both. Please note that the `calls` will always be an array, but you can define an `OptionDef` using a single string, such as :
 
 ```javascript
-new OptionDef('l', true, 'This is my long description', 1)
+new OptionDef('l', {description: 'This is my long description', acceptsContent: true, weight: 1})
 ```
 
 ### Defining options lazily
@@ -239,8 +243,8 @@ You may sometimes prefer to define the definitions after a basic parsing to get 
 import { VCommandParser, OptionDef } from 'vcommand-parser';
 
 const definitions = [
-  new OptionDef(['l', 'long'], true, 'This is my long description', 1),
-  new OptionDef(['s', 'short'], true, 'This is my short description', 2)
+  new OptionDef(['l', 'long'], {description: 'This is my long description', weight: 1}),
+  new OptionDef(['s', 'short'], {description: 'This is my short description', weight: 2})
 ];
 
 const parsedCommand = VCommandParser.parseLazy('!command content -l "option content"');
