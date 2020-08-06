@@ -16,11 +16,15 @@ export default class VCommandParser {
 	 * To process options, you can either use the `parsed.doParseOptions()` function or set the option definitions using `parsed.setOptionDefinitions(definitions)`.
 	 *
 	 * @param message String that potentially contains a command.
+	 *
 	 * @param commandPrefix String that will be used for the `{PREFIX}` variable, in the format given above.
-	 * 	Defaults to `VCommandParser.DEFAULT_COMMAND_PREFIX` (`!`).
+	 *
+	 * Defaults to `VCommandParser.DEFAULT_COMMAND_PREFIX` (`!`).
+	 *
 	 * @param optionPrefix String that will be used for the `{OPTION_PREFIX}` variable, in the format given above.
-	 * 	Needs to be part of the `OptionPrefix` type.
-	 * 	Defaults to `VCommandParser.DEFAULT_OPTION_PREFIX` (`-`).
+	 * Needs to be part of the `OptionPrefix` type.
+	 *
+	 * Defaults to `VCommandParser.DEFAULT_OPTION_PREFIX` (`-`).
 	 *
 	 * @returns `VLazyParsedCommand` instance containing the results of the parsing.
 	 */
@@ -36,11 +40,16 @@ export default class VCommandParser {
 	 * If you didn't use the `optionDefinitions` param, you can set the option definitions afterward using `parsed.setOptionDefinitions(definitions)`.
 	 *
 	 * @param message String that potentially contains a command.
+	 *
 	 * @param commandPrefix String that will be used for the `{PREFIX}` variable, in the format given above.
-	 * 	Defaults to `VCommandParser.DEFAULT_COMMAND_PREFIX` (`!`).
+	 *
+	 * Defaults to `VCommandParser.DEFAULT_COMMAND_PREFIX` (`!`).
+	 *
 	 * @param optionPrefix String that will be used for the `{OPTION_PREFIX}` variable, in the format given above.
-	 * 	Needs to be part of the `OptionPrefix` type.
-	 * 	Defaults to `VCommandParser.DEFAULT_OPTION_PREFIX` (`-`).
+	 * Needs to be part of the `OptionPrefix` type.
+	 *
+	 * Defaults to `VCommandParser.DEFAULT_OPTION_PREFIX` (`-`).
+	 *
 	 * @param optionDefinitions Array of option definitions that tells the parser how to map options and tweak some behaviors, such as if the option accepts content.
 	 *
 	 * @returns `VParsedCommand` instance containing the results of the parsing.
@@ -88,12 +97,23 @@ export class VParsedCommand {
 	/**
 	 * Retrieves an option from the list of options.
 	 *
-	 * @param search There is two ways this function will search for an option :
-	 * - If the value provided is a string, it will return the option that contains the value in its definition calls, and if there is no definition for the option, it will check if the option name matches the search value provided.
-	 * 	Otherwise, it will return `undefined`.
-	 * - If the value is a number, it will return the option that has the position that matches the search value.
-	 * 	Otherwise, it will return `undefined`.
+	 * @param call The name of the option / one of its aliases to use for the search method.
+	 *
+	 * If the option has a definition, this definition will be used to try and match the given call with the defined calls, otherwise, it will check if the option name matches the given call.
+	 *
+	 * If no option has such call, `undefined` is returned.
 	 */
+	getOption(call: string): MessageOption | undefined;
+	
+	/**
+	 * Retrieves an option from the list of options.
+	 *
+	 * @param position The position that the option is in.
+	 *
+	 * If no option is in that position, `undefined` is returned.
+	 */
+	getOption(position: number): MessageOption | undefined;
+	
 	getOption(search: string | number): MessageOption | undefined {
 		return this.options?.find(option => {
 			if (typeof search == 'string') {
