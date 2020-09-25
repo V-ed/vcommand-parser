@@ -2,9 +2,11 @@ import { ParsedValue, splitSpacesExcludeQuotesDetailed } from 'quoted-string-spa
 import OptionPrefix from './@types/OptionPrefix';
 import MessageOption from './message-option';
 import OptionDef from './option-def';
+import { RequiredParserOptions, verifyParserOptionsIsNonLazy, VLazyParserOptions, VParserOptions } from './vcommandparser';
 
-export type ParsedMessage = {
+export type VParsedMessage<T extends VLazyParserOptions | VParserOptions> = {
 	isCommand: boolean;
+	parserOptions: T;
 	command?: string;
 	fullContent?: string;
 	content?: string;
@@ -12,15 +14,19 @@ export type ParsedMessage = {
 	duplicatedOptions?: MessageOption[];
 }
 
-export function parseMessage(message: string, commandPrefix: string, optionPrefix: OptionPrefix, optionDefinitions?: OptionDef[], isLazy = false): ParsedMessage {
-	const extractedData = extractCommandAndContent(message, commandPrefix);
+// export default function parseMessage(message: string, commandPrefix: string, optionPrefix: OptionPrefix, optionDefinitions?: OptionDef[], isLazy = false): ParsedMessage {
+export function parseMessage(message: string, parserOptions: RequiredParserOptions<VLazyParserOptions | VParserOptions>): VParsedMessage<RequiredParserOptions<VLazyParserOptions | VParserOptions>> {
+	const extractedData = extractCommandAndContent(message, parserOptions.commandPrefix);
 	
-	const extractedOptions: ParsedOptions | Record<string, unknown> = extractedData.isCommand && !isLazy && extractedData.content ? extractOptionsFromParsedContent(extractedData.content, optionPrefix, optionDefinitions) : {};
+	const extractedOptions: ParsedOptions | Record<string, unknown> = verifyParserOptionsIsNonLazy(parserOptions) && extractedData.isCommand && extractedData.content
+		? extractOptionsFromParsedContent(extractedData.content, parserOptions.optionPrefix, parserOptions.optionDefinitions)
+		: {};
 	
 	const parsedMessage = {
 		fullContent: extractedData.content,
+		parserOptions: parserOptions,
 		...extractedData,
-		...extractedOptions
+		...extractedOptions,
 	};
 	
 	return parsedMessage;

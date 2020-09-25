@@ -1,61 +1,99 @@
 import OptionPrefix from './@types/OptionPrefix';
-import { parseMessage } from './message-parser';
+import { parseMessage, VParsedMessage } from './message-parser';
 import OptionDef from './option-def';
 import { VLazyParsedCommand, VParsedCommand } from './vparsedcommand';
+
+export interface VCommonParserOptions {
+	/**
+	 * String that will be used to split the prefix to the command name.
+	 *
+	 * Defaults to `VCommandParser.DEFAULT_COMMAND_PREFIX` (`!`).
+	 */
+	commandPrefix?: string;
+	/**
+	 * Character that will be used to split the prefix out of option names.
+	 *
+	 * Defaults to `VCommandParser.DEFAULT_OPTION_PREFIX` (`-`).
+	 */
+	optionPrefix?: OptionPrefix;
+	
+	isLazy?: boolean;
+}
+
+export interface VLazyParserOptions extends VCommonParserOptions {
+	isLazy?: true;
+	
+	/**
+	 * Function to return the array of option definitions that tells the parser how to map options and tweak some behaviors, such as if the option accepts content.
+	 */
+	optionDefinitions?: (parsedCommand?: VLazyParsedCommand) => OptionDef[];
+}
+
+export interface VParserOptions extends VCommonParserOptions {
+	isLazy?: false;
+	
+	/**
+	 * Array of option definitions that tells the parser how to map options and tweak some behaviors, such as if the option accepts content.
+	 */
+	optionDefinitions?: OptionDef[];
+}
+
+export type RequiredParserOptions<T> = Required<VCommonParserOptions> & T;
+
+function mergeWithDefaultParserOptions<T extends VCommonParserOptions>(parserOptions: T = {} as T): RequiredParserOptions<T> {
+	const defaultOptions: Required<VCommonParserOptions> = {
+		commandPrefix: VCommandParser.DEFAULT_COMMAND_PREFIX,
+		optionPrefix: VCommandParser.DEFAULT_OPTION_PREFIX,
+		isLazy: false,
+	};
+	
+	return {...defaultOptions, ...parserOptions};
+}
+
+export function verifyParserOptionsIsNonLazy(parserOptions: RequiredParserOptions<VLazyParserOptions | VParserOptions>): parserOptions is Required<VCommonParserOptions> & VParserOptions {
+	return !parserOptions.isLazy && (parserOptions.optionDefinitions == undefined || Array.isArray(parserOptions.optionDefinitions));
+}
+function verifyParsedCommandType(parsedMessage: VParsedMessage<RequiredParserOptions<VLazyParserOptions | VParserOptions>>): parsedMessage is VParsedMessage<Required<VCommonParserOptions> & VParserOptions> {
+	return verifyParserOptionsIsNonLazy(parsedMessage.parserOptions);
+}
+function verifyLazyParsedCommandType(parsedMessage: VParsedMessage<RequiredParserOptions<VLazyParserOptions | VParserOptions>>): parsedMessage is VParsedMessage<Required<VCommonParserOptions> & VLazyParserOptions> {
+	return !verifyParsedCommandType(parsedMessage);
+}
 
 export class VCommandParser {
 	static readonly DEFAULT_COMMAND_PREFIX = '!';
 	static readonly DEFAULT_OPTION_PREFIX = '-';
 	
 	/**
-	 * This function parses a string and gets the component if the string is in the format `{PREFIX}{COMMAND} [{content}] [{OPTION_PREFIX}{OPTION} [{OPTION_CONTENT}]]` (where anything between `[]` is optional).
+	 * This function parses a string and gets the component if the string is in the format `{PREFIX}{COMMAND} [{content}] [{OPTION_PREFIX}{OPTION} [{OPTION_CONTENT}] [{content}]]*` (where anything between `[]` is optional, and an `*` means multiple times).
 	 *
 	 * This function lazily parses the message, meaning only the command is processed.
-	 * To process options, you can either use the `parsed.doParseOptions()` function or set the option definitions using `parsed.setOptionDefinitions(definitions)`.
+	 * To process options, you can either use the `parsedCommand.doParseOptions()` function or set the option definitions using `parsedCommand.setOptionDefinitions(definitions)`.
 	 *
 	 * @param message String that potentially contains a command.
 	 *
-	 * @param commandPrefix String that will be used for the `{PREFIX}` variable, in the format given above.
+	 * @param parserOptions Options used to customize the behavior of the parser.
 	 *
-	 * Defaults to `VCommandParser.DEFAULT_COMMAND_PREFIX` (`!`).
-	 *
-	 * @param optionPrefix String that will be used for the `{OPTION_PREFIX}` variable, in the format given above.
-	 * Needs to be part of the `OptionPrefix` type.
-	 *
-	 * Defaults to `VCommandParser.DEFAULT_OPTION_PREFIX` (`-`).
+	 * @example VCommandParser.parse('!command --option "Option content"')
+	 * @example VCommandParser.parse('%%command --option "Option content"', {commandPrefix: '%%'})
 	 *
 	 * @returns `VLazyParsedCommand` instance containing the results of the parsing.
 	 */
-	static parseLazy(message: string, commandPrefix = VCommandParser.DEFAULT_COMMAND_PREFIX, optionPrefix: OptionPrefix = VCommandParser.DEFAULT_OPTION_PREFIX): VLazyParsedCommand {
-		const parsedMessage = parseMessage(message, commandPrefix, optionPrefix, undefined, true);
-		
-		return new VLazyParsedCommand(message, commandPrefix, optionPrefix, parsedMessage);
-	}
+	static parse(message: string, parserOptions?: VParserOptions): VParsedCommand;
+	static parse(message: string, parserOptions?: VLazyParserOptions): VLazyParsedCommand;
 	
-	/**
-	 * This function parses a string and gets the component if the string is in the format `{PREFIX}{COMMAND} [{content}] [{OPTION_PREFIX}{OPTION} [{OPTION_CONTENT}]]` (where anything between `[]` is optional).
-	 *
-	 * If you didn't use the `optionDefinitions` param, you can set the option definitions afterward using `parsed.setOptionDefinitions(definitions)`.
-	 *
-	 * @param message String that potentially contains a command.
-	 *
-	 * @param commandPrefix String that will be used for the `{PREFIX}` variable, in the format given above.
-	 *
-	 * Defaults to `VCommandParser.DEFAULT_COMMAND_PREFIX` (`!`).
-	 *
-	 * @param optionPrefix String that will be used for the `{OPTION_PREFIX}` variable, in the format given above.
-	 * Needs to be part of the `OptionPrefix` type.
-	 *
-	 * Defaults to `VCommandParser.DEFAULT_OPTION_PREFIX` (`-`).
-	 *
-	 * @param optionDefinitions Array of option definitions that tells the parser how to map options and tweak some behaviors, such as if the option accepts content.
-	 *
-	 * @returns `VParsedCommand` instance containing the results of the parsing.
-	 */
-	static parse(message: string, commandPrefix = VCommandParser.DEFAULT_COMMAND_PREFIX, optionPrefix: OptionPrefix = VCommandParser.DEFAULT_OPTION_PREFIX, optionDefinitions?: OptionDef[]): VParsedCommand {
-		const parsedMessage = parseMessage(message, commandPrefix, optionPrefix, optionDefinitions);
+	static parse(message: string, parserOptions?: VLazyParserOptions | VParserOptions): VLazyParsedCommand | VParsedCommand {
+		const options = mergeWithDefaultParserOptions(parserOptions);
 		
-		return new VParsedCommand(message, commandPrefix, optionPrefix, parsedMessage, optionDefinitions);
+		const parsedMessage = parseMessage(message, options);
+		
+		if (verifyParsedCommandType(parsedMessage)) {
+			return new VParsedCommand(message, parsedMessage);
+		} else if (verifyLazyParsedCommandType(parsedMessage)) {
+			return new VLazyParsedCommand(message, parsedMessage);
+		} else {
+			throw new Error('An internal error as occurred');
+		}
 	}
 }
 

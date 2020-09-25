@@ -1,6 +1,27 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
 import VCommandParser from '../src/vcommandparser';
+import VLazyParsedCommand, { VParsedCommand } from '../src/vparsedcommand';
+
+describe('Testing value types', () => {
+	it('parsed object should be of type VParsedCommand', () => {
+		const parsed = VCommandParser.parse('!mycommand');
+		
+		expect(parsed instanceof VParsedCommand).toBeTruthy();
+	});
+	
+	it('parsed object should be of type VLazyParsedCommand', () => {
+		const parsed = VCommandParser.parse('!mycommand', {isLazy: true});
+		
+		expect(parsed instanceof VLazyParsedCommand).toBeTruthy();
+	});
+	
+	it('parsed object should be of type VLazyParsedCommand when custom optionDefs', () => {
+		const parsed = VCommandParser.parse('!mycommand', {optionDefinitions: () => []});
+		
+		expect(parsed instanceof VLazyParsedCommand).toBeTruthy();
+	});
+});
 
 describe('Non-lazy parsing', () => {
 	describe('Basic Message Parsing', () => {
@@ -18,13 +39,13 @@ describe('Non-lazy parsing', () => {
 		});
 		
 		it('should return correct command with custom prefix', () => {
-			const parsed = VCommandParser.parse('\\mycommand', '\\');
+			const parsed = VCommandParser.parse('\\mycommand', {commandPrefix: '\\'});
 			
 			expect(parsed.command).toBe('mycommand');
 		});
 		
 		it('should return correct command and content with custom prefix', () => {
-			const parsed = VCommandParser.parse('\\mycommand my content', '\\');
+			const parsed = VCommandParser.parse('\\mycommand my content', {commandPrefix: '\\'});
 			
 			expect(parsed.command).toBe('mycommand');
 			expect(parsed.content).toBe('my content');
@@ -34,6 +55,18 @@ describe('Non-lazy parsing', () => {
 			const parsed = VCommandParser.parse('!mycommand my content');
 			
 			expect(parsed.isCommand).toBeTruthy();
+		});
+		
+		it('should return proper content and options', () => {
+			const parsed = VCommandParser.parse('!mycommand content --option option_content');
+			
+			expect(parsed.command).toBe('mycommand');
+			expect(parsed.content).toBe('content');
+			
+			const option = parsed.getOption('option');
+			
+			expect(option).toBeDefined();
+			expect(option!.content).toBe('option_content');
 		});
 	});
 	
@@ -139,42 +172,62 @@ describe('Non-lazy parsing', () => {
 describe('Lazy parsing', () => {
 	describe('Basic Message Parsing', () => {
 		it('should return correct command', () => {
-			const parsed = VCommandParser.parseLazy('!mycommand');
+			const parsed = VCommandParser.parse('!mycommand', {isLazy: true});
 			
 			expect(parsed.command).toBe('mycommand');
 		});
 		
 		it('should return correct command and content', () => {
-			const parsed = VCommandParser.parseLazy('!mycommand my content');
+			const parsed = VCommandParser.parse('!mycommand my content', {isLazy: true});
 			
 			expect(parsed.command).toBe('mycommand');
 			expect(parsed.content).toBe('my content');
 		});
 		
 		it('should return correct command with custom prefix', () => {
-			const parsed = VCommandParser.parseLazy('\\mycommand', '\\');
+			const parsed = VCommandParser.parse('\\mycommand', {commandPrefix: '\\', isLazy: true});
 			
 			expect(parsed.command).toBe('mycommand');
 		});
 		
 		it('should return correct command and content with custom prefix', () => {
-			const parsed = VCommandParser.parseLazy('\\mycommand my content', '\\');
+			const parsed = VCommandParser.parse('\\mycommand my content', {commandPrefix: '\\', isLazy: true});
 			
 			expect(parsed.command).toBe('mycommand');
 			expect(parsed.content).toBe('my content');
 		});
 		
 		it('should parse message and define isCommand to true', () => {
-			const parsed = VCommandParser.parseLazy('!mycommand my content');
+			const parsed = VCommandParser.parse('!mycommand my content', {isLazy: true});
 			
 			expect(parsed.isCommand).toBeTruthy();
+		});
+		
+		it('should return proper content and options', () => {
+			const parsed = VCommandParser.parse('!mycommand content --option option_content', {isLazy: true});
+			
+			expect(parsed.command).toBe('mycommand');
+			expect(parsed.content).toBe('content --option option_content');
+			
+			const option1 = parsed.getOption('option');
+			
+			expect(option1).toBeUndefined();
+			
+			parsed.doParseOptions();
+			
+			expect(parsed.content).toBe('content');
+			
+			const option2 = parsed.getOption('option');
+			
+			expect(option2).toBeDefined();
+			expect(option2!.content).toBe('option_content');
 		});
 	});
 	
 	describe('Testing VLazyParsedCommand basic functions', () => {
 		describe('getOption function with string', () => {
 			it('should return undefined when no option', () => {
-				const parsed = VCommandParser.parseLazy('!mycommand');
+				const parsed = VCommandParser.parse('!mycommand', {isLazy: true});
 				
 				parsed.doParseOptions();
 				
@@ -184,7 +237,7 @@ describe('Lazy parsing', () => {
 			});
 			
 			it('should return undefined when option not in request', () => {
-				const parsed = VCommandParser.parseLazy('!mycommand --option');
+				const parsed = VCommandParser.parse('!mycommand --option', {isLazy: true});
 				
 				parsed.doParseOptions();
 				
@@ -194,7 +247,7 @@ describe('Lazy parsing', () => {
 			});
 			
 			it('should return option with correct name', () => {
-				const parsed = VCommandParser.parseLazy('!mycommand --option');
+				const parsed = VCommandParser.parse('!mycommand --option', {isLazy: true});
 				
 				parsed.doParseOptions();
 				
@@ -205,7 +258,7 @@ describe('Lazy parsing', () => {
 			});
 			
 			it('should return option with correct name despite multiple options', () => {
-				const parsed = VCommandParser.parseLazy('!mycommand --option1 --option2');
+				const parsed = VCommandParser.parse('!mycommand --option1 --option2', {isLazy: true});
 				
 				parsed.doParseOptions();
 				
@@ -218,7 +271,7 @@ describe('Lazy parsing', () => {
 		
 		describe('getOption function with number', () => {
 			it('should return undefined when no option', () => {
-				const parsed = VCommandParser.parseLazy('!mycommand');
+				const parsed = VCommandParser.parse('!mycommand', {isLazy: true});
 				
 				parsed.doParseOptions();
 				
@@ -228,7 +281,7 @@ describe('Lazy parsing', () => {
 			});
 			
 			it('should return undefined when no option with position', () => {
-				const parsed = VCommandParser.parseLazy('!mycommand --option');
+				const parsed = VCommandParser.parse('!mycommand --option', {isLazy: true});
 				
 				parsed.doParseOptions();
 				
@@ -238,7 +291,7 @@ describe('Lazy parsing', () => {
 			});
 			
 			it('should return option with correct position', () => {
-				const parsed = VCommandParser.parseLazy('!mycommand --option');
+				const parsed = VCommandParser.parse('!mycommand --option', {isLazy: true});
 				
 				parsed.doParseOptions();
 				
@@ -249,7 +302,7 @@ describe('Lazy parsing', () => {
 			});
 			
 			it('should return option with correct position despite multiple options', () => {
-				const parsed = VCommandParser.parseLazy('!mycommand --option1 --option2');
+				const parsed = VCommandParser.parse('!mycommand --option1 --option2', {isLazy: true});
 				
 				parsed.doParseOptions();
 				
@@ -263,21 +316,21 @@ describe('Lazy parsing', () => {
 	
 	describe('Non-commands parsing behaviors', () => {
 		it('should parse message and define isCommand to false', () => {
-			const parsed = VCommandParser.parseLazy('this is a message');
+			const parsed = VCommandParser.parse('this is a message', {isLazy: true});
 			
 			expect(parsed.isCommand).toBeFalsy();
 			expect(parsed.command).toBeUndefined();
 		});
 		
 		it('should parse message and not parse options', () => {
-			const parsed = VCommandParser.parseLazy('this is --a message');
+			const parsed = VCommandParser.parse('this is --a message', {isLazy: true});
 			
 			expect(parsed.options).toBeUndefined();
 			expect(parsed.content).toBe('this is --a message');
 		});
 		
 		it('should parse message and not parse as a command if there is a space between prefix and command', () => {
-			const parsed = VCommandParser.parseLazy('! not a command');
+			const parsed = VCommandParser.parse('! not a command', {isLazy: true});
 			
 			expect(parsed.isCommand).toBeFalsy();
 			expect(parsed.command).toBeUndefined();

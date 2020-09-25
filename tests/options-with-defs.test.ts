@@ -17,7 +17,7 @@ describe('default option prefix with definitions', () => {
 	describe('Messages with basic options', () => {
 		describe('options do accept', () => {
 			it('should contain one defined long option', () => {
-				const parsed = VCommandParser.parse('!mycommand --long', undefined, undefined, optionDefinitions);
+				const parsed = VCommandParser.parse('!mycommand --long', {optionDefinitions: optionDefinitions});
 				
 				expect(parsed.options).toBeDefined();
 				if (parsed.options) {
@@ -31,7 +31,7 @@ describe('default option prefix with definitions', () => {
 			});
 			
 			it('should contain one defined short option', () => {
-				const parsed = VCommandParser.parse('!mycommand -s', undefined, undefined, optionDefinitions);
+				const parsed = VCommandParser.parse('!mycommand -s', {optionDefinitions: optionDefinitions});
 				
 				expect(parsed.options).toBeDefined();
 				if (parsed.options) {
@@ -45,7 +45,7 @@ describe('default option prefix with definitions', () => {
 			});
 			
 			it('should contain one defined long option with content', () => {
-				const parsed = VCommandParser.parse('!mycommand --long content', undefined, undefined, optionDefinitions);
+				const parsed = VCommandParser.parse('!mycommand --long content', {optionDefinitions: optionDefinitions});
 				
 				expect(parsed.options).toBeDefined();
 				if (parsed.options) {
@@ -59,7 +59,7 @@ describe('default option prefix with definitions', () => {
 			});
 			
 			it('should contain one defined short option with content', () => {
-				const parsed = VCommandParser.parse('!mycommand -s content', undefined, undefined, optionDefinitions);
+				const parsed = VCommandParser.parse('!mycommand -s content', {optionDefinitions: optionDefinitions});
 				
 				expect(parsed.options).toBeDefined();
 				if (parsed.options) {
@@ -75,7 +75,7 @@ describe('default option prefix with definitions', () => {
 		
 		describe('options do not accept', () => {
 			it('should contain one defined long option', () => {
-				const parsed = VCommandParser.parse('!mycommand --long', undefined, undefined, optionDefinitionsNoContent);
+				const parsed = VCommandParser.parse('!mycommand --long', {optionDefinitions: optionDefinitionsNoContent});
 				
 				expect(parsed.options).toBeDefined();
 				if (parsed.options) {
@@ -89,7 +89,7 @@ describe('default option prefix with definitions', () => {
 			});
 			
 			it('should contain one defined short option', () => {
-				const parsed = VCommandParser.parse('!mycommand -s', undefined, undefined, optionDefinitionsNoContent);
+				const parsed = VCommandParser.parse('!mycommand -s', {optionDefinitions: optionDefinitionsNoContent});
 				
 				expect(parsed.options).toBeDefined();
 				if (parsed.options) {
@@ -103,7 +103,7 @@ describe('default option prefix with definitions', () => {
 			});
 			
 			it('should contain one defined long option with content', () => {
-				const parsed = VCommandParser.parse('!mycommand --long content', undefined, undefined, optionDefinitionsNoContent);
+				const parsed = VCommandParser.parse('!mycommand --long content', {optionDefinitions: optionDefinitionsNoContent});
 				
 				expect(parsed.content).toBe('content');
 				
@@ -119,7 +119,7 @@ describe('default option prefix with definitions', () => {
 			});
 			
 			it('should contain one defined short option with content', () => {
-				const parsed = VCommandParser.parse('!mycommand -s content', undefined, undefined, optionDefinitionsNoContent);
+				const parsed = VCommandParser.parse('!mycommand -s content', {optionDefinitions: optionDefinitionsNoContent});
 				
 				expect(parsed.content).toBe('content');
 				
@@ -143,7 +143,7 @@ describe('default option prefix with definitions', () => {
 	
 	describe('retrieving options from command parser', () => {
 		it('should retrieve long option by short call', () => {
-			const parsed = VCommandParser.parse('!mycommand --long', undefined, undefined, optionDefinitionsMultipleCalls);
+			const parsed = VCommandParser.parse('!mycommand --long', {optionDefinitions: optionDefinitionsMultipleCalls});
 			
 			const option = parsed.getOption('l');
 			
@@ -152,7 +152,7 @@ describe('default option prefix with definitions', () => {
 		});
 		
 		it('should retrieve short option by long call', () => {
-			const parsed = VCommandParser.parse('!mycommand -s', undefined, undefined, optionDefinitionsMultipleCalls);
+			const parsed = VCommandParser.parse('!mycommand -s', {optionDefinitions: optionDefinitionsMultipleCalls});
 			
 			const option = parsed.getOption('short');
 			
