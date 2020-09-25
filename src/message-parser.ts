@@ -12,9 +12,7 @@ export type ParsedMessage = {
 	duplicatedOptions?: MessageOption[];
 }
 
-export { parseMessage };
-
-export default function parseMessage(message: string, commandPrefix: string, optionPrefix: OptionPrefix, optionDefinitions?: OptionDef[], isLazy = false): ParsedMessage {
+export function parseMessage(message: string, commandPrefix: string, optionPrefix: OptionPrefix, optionDefinitions?: OptionDef[], isLazy = false): ParsedMessage {
 	const extractedData = extractCommandAndContent(message, commandPrefix);
 	
 	const extractedOptions: ParsedOptions | Record<string, unknown> = extractedData.isCommand && !isLazy && extractedData.content ? extractOptionsFromParsedContent(extractedData.content, optionPrefix, optionDefinitions) : {};
@@ -161,3 +159,5 @@ export function extractOptionsFromParsedContent(content: string, optionPrefix: O
 		duplicatedOptions: duplicatedOptions.length ? duplicatedOptions : undefined
 	};
 }
+
+export default parseMessage;
