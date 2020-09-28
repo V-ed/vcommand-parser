@@ -17,7 +17,7 @@ describe('default option prefix with definitions', () => {
 	describe('Messages with basic options', () => {
 		describe('no content', () => {
 			it('should not have options', () => {
-				const parsed = VCommandParser.parse('!mycommand', {isLazy: true});
+				const parsed = VCommandParser.parse('!mycommand', {lazy: true});
 				
 				parsed.setOptionDefinitions(optionDefinitions);
 				
@@ -27,7 +27,7 @@ describe('default option prefix with definitions', () => {
 		
 		describe('options do accept', () => {
 			it('should contain one defined long option', () => {
-				const parsed = VCommandParser.parse('!mycommand --long', {isLazy: true});
+				const parsed = VCommandParser.parse('!mycommand --long', {lazy: true});
 				
 				parsed.setOptionDefinitions(optionDefinitions);
 				
@@ -43,7 +43,7 @@ describe('default option prefix with definitions', () => {
 			});
 			
 			it('should contain one defined short option', () => {
-				const parsed = VCommandParser.parse('!mycommand -s', {isLazy: true});
+				const parsed = VCommandParser.parse('!mycommand -s', {lazy: true});
 				
 				parsed.setOptionDefinitions(optionDefinitions);
 				
@@ -59,7 +59,7 @@ describe('default option prefix with definitions', () => {
 			});
 			
 			it('should contain one defined long option with content', () => {
-				const parsed = VCommandParser.parse('!mycommand --long content', {isLazy: true});
+				const parsed = VCommandParser.parse('!mycommand --long content', {lazy: true});
 				
 				parsed.setOptionDefinitions(optionDefinitions);
 				
@@ -75,7 +75,7 @@ describe('default option prefix with definitions', () => {
 			});
 			
 			it('should contain one defined short option with content', () => {
-				const parsed = VCommandParser.parse('!mycommand -s content', {isLazy: true});
+				const parsed = VCommandParser.parse('!mycommand -s content', {lazy: true});
 				
 				parsed.setOptionDefinitions(optionDefinitions);
 				
@@ -93,7 +93,7 @@ describe('default option prefix with definitions', () => {
 		
 		describe('options do not accept', () => {
 			it('should contain one defined long option', () => {
-				const parsed = VCommandParser.parse('!mycommand --long', {isLazy: true});
+				const parsed = VCommandParser.parse('!mycommand --long', {lazy: true});
 				
 				parsed.setOptionDefinitions(optionDefinitionsNoContent);
 				
@@ -109,7 +109,7 @@ describe('default option prefix with definitions', () => {
 			});
 			
 			it('should contain one defined short option', () => {
-				const parsed = VCommandParser.parse('!mycommand -s', {isLazy: true});
+				const parsed = VCommandParser.parse('!mycommand -s', {lazy: true});
 				
 				parsed.setOptionDefinitions(optionDefinitionsNoContent);
 				
@@ -125,7 +125,7 @@ describe('default option prefix with definitions', () => {
 			});
 			
 			it('should contain one defined long option with content', () => {
-				const parsed = VCommandParser.parse('!mycommand --long content', {isLazy: true});
+				const parsed = VCommandParser.parse('!mycommand --long content', {lazy: true});
 				
 				parsed.setOptionDefinitions(optionDefinitionsNoContent);
 				
@@ -143,7 +143,7 @@ describe('default option prefix with definitions', () => {
 			});
 			
 			it('should contain one defined short option with content', () => {
-				const parsed = VCommandParser.parse('!mycommand -s content', {isLazy: true});
+				const parsed = VCommandParser.parse('!mycommand -s content', {lazy: true});
 				
 				parsed.setOptionDefinitions(optionDefinitionsNoContent);
 				
@@ -169,7 +169,7 @@ describe('default option prefix with definitions', () => {
 	
 	describe('retrieving options from command parser', () => {
 		it('should retrieve long option by short call', () => {
-			const parsed = VCommandParser.parse('!mycommand --long', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand --long', {lazy: true});
 			
 			parsed.setOptionDefinitions(optionDefinitionsMultipleCalls);
 			
@@ -180,7 +180,7 @@ describe('default option prefix with definitions', () => {
 		});
 		
 		it('should retrieve short option by long call', () => {
-			const parsed = VCommandParser.parse('!mycommand -s', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -s', {lazy: true});
 			
 			parsed.setOptionDefinitions(optionDefinitionsMultipleCalls);
 			

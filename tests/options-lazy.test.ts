@@ -5,7 +5,7 @@ import VCommandParser from '../src/vcommandparser';
 describe('default option prefix', () => {
 	describe('Messages with basic options', () => {
 		it('should contain one long option', () => {
-			const parsed = VCommandParser.parse('!mycommand --long', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand --long', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -19,7 +19,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain one short option', () => {
-			const parsed = VCommandParser.parse('!mycommand -s', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -s', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -33,7 +33,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain two short option stickied', () => {
-			const parsed = VCommandParser.parse('!mycommand -sh', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -sh', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -48,7 +48,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain five short option stickied', () => {
-			const parsed = VCommandParser.parse('!mycommand -short', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -short', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -66,7 +66,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain two long option', () => {
-			const parsed = VCommandParser.parse('!mycommand --long1 --long2', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand --long1 --long2', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -81,7 +81,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain three long option', () => {
-			const parsed = VCommandParser.parse('!mycommand --long1 --long2 --long3', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand --long1 --long2 --long3', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -97,7 +97,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain two short option', () => {
-			const parsed = VCommandParser.parse('!mycommand -s -h', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -s -h', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -112,7 +112,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain three short option', () => {
-			const parsed = VCommandParser.parse('!mycommand -s -h -o', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -s -h -o', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -128,7 +128,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain four short option, 2 stickied groups', () => {
-			const parsed = VCommandParser.parse('!mycommand -sh -or', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -sh -or', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -147,7 +147,7 @@ describe('default option prefix', () => {
 	
 	describe('Messages with basic options and content', () => {
 		it('should contain one long option', () => {
-			const parsed = VCommandParser.parse('!mycommand --long content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand --long content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -161,7 +161,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain one short option', () => {
-			const parsed = VCommandParser.parse('!mycommand -s content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -s content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -175,7 +175,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain two short option stickied', () => {
-			const parsed = VCommandParser.parse('!mycommand -sh content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -sh content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -190,7 +190,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain five short option stickied', () => {
-			const parsed = VCommandParser.parse('!mycommand -short content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -short content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -208,7 +208,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain two long option', () => {
-			const parsed = VCommandParser.parse('!mycommand --long1 content1 --long2 content2', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand --long1 content1 --long2 content2', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -223,7 +223,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain three long option', () => {
-			const parsed = VCommandParser.parse('!mycommand --long1 content1 --long2 content2 --long3 content3', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand --long1 content1 --long2 content2 --long3 content3', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -239,7 +239,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain three long option only one content', () => {
-			const parsed = VCommandParser.parse('!mycommand --long1 --long2 content --long3', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand --long1 --long2 content --long3', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -255,7 +255,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain two short option', () => {
-			const parsed = VCommandParser.parse('!mycommand -s content1 -h content2', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -s content1 -h content2', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -270,7 +270,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain three short option', () => {
-			const parsed = VCommandParser.parse('!mycommand -s content1 -h content2 -o content3', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -s content1 -h content2 -o content3', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -286,7 +286,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain three short option only one content', () => {
-			const parsed = VCommandParser.parse('!mycommand -s -h content -o', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -s -h content -o', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -302,7 +302,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain four short option, 2 stickied groups', () => {
-			const parsed = VCommandParser.parse('!mycommand -sh content1 -or content2', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -sh content1 -or content2', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -321,7 +321,7 @@ describe('default option prefix', () => {
 	
 	describe('Messages with content and basic options and content', () => {
 		it('should contain one long option', () => {
-			const parsed = VCommandParser.parse('!mycommand mycontent --long content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand mycontent --long content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -335,7 +335,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain one long option and spaced content', () => {
-			const parsed = VCommandParser.parse('!mycommand my content --long content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand my content --long content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -349,7 +349,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain one long option content after', () => {
-			const parsed = VCommandParser.parse('!mycommand --long content mycontent', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand --long content mycontent', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -363,7 +363,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain one long option and spaced content after', () => {
-			const parsed = VCommandParser.parse('!mycommand --long content my content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand --long content my content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -377,7 +377,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain one short option', () => {
-			const parsed = VCommandParser.parse('!mycommand mcontent -s content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand mcontent -s content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -391,7 +391,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain one short option and spaced content', () => {
-			const parsed = VCommandParser.parse('!mycommand my content -s content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand my content -s content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -405,7 +405,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain one short option after', () => {
-			const parsed = VCommandParser.parse('!mycommand -s content mcontent', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -s content mcontent', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -419,7 +419,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain one short option and spaced content after', () => {
-			const parsed = VCommandParser.parse('!mycommand -s content my content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -s content my content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -433,7 +433,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain two short option stickied', () => {
-			const parsed = VCommandParser.parse('!mycommand -sh content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -sh content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -448,7 +448,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain five short option stickied', () => {
-			const parsed = VCommandParser.parse('!mycommand -short content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -short content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -466,7 +466,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain two long option', () => {
-			const parsed = VCommandParser.parse('!mycommand --long1 content1 --long2 content2', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand --long1 content1 --long2 content2', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -481,7 +481,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain three long option', () => {
-			const parsed = VCommandParser.parse('!mycommand --long1 content1 --long2 content2 --long3 content3', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand --long1 content1 --long2 content2 --long3 content3', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -497,7 +497,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain three long option only one content', () => {
-			const parsed = VCommandParser.parse('!mycommand --long1 --long2 content --long3', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand --long1 --long2 content --long3', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -513,7 +513,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain two short option', () => {
-			const parsed = VCommandParser.parse('!mycommand -s content1 -h content2', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -s content1 -h content2', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -528,7 +528,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain three short option', () => {
-			const parsed = VCommandParser.parse('!mycommand -s content1 -h content2 -o content3', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -s content1 -h content2 -o content3', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -544,7 +544,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain three short option only one content', () => {
-			const parsed = VCommandParser.parse('!mycommand -s -h content -o', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -s -h content -o', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -560,7 +560,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain four short option, 2 stickied groups', () => {
-			const parsed = VCommandParser.parse('!mycommand -sh content1 -or content2', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -sh content1 -or content2', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -579,7 +579,7 @@ describe('default option prefix', () => {
 	
 	describe('Messages with option stopper', () => {
 		it('should contain content only', () => {
-			const parsed = VCommandParser.parse('!mycommand -- content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -- content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -587,7 +587,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain both content only', () => {
-			const parsed = VCommandParser.parse('!mycommand my -- content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand my -- content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -595,7 +595,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain one long option and content', () => {
-			const parsed = VCommandParser.parse('!mycommand --long -- content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand --long -- content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -609,7 +609,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain one long option and option like content', () => {
-			const parsed = VCommandParser.parse('!mycommand --long -- --content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand --long -- --content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -623,7 +623,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain one short option and content', () => {
-			const parsed = VCommandParser.parse('!mycommand -s -- content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -s -- content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -637,7 +637,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain one short option and option like content', () => {
-			const parsed = VCommandParser.parse('!mycommand -s -- --content', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand -s -- --content', {lazy: true});
 			
 			parsed.doParseOptions();
 			
@@ -651,7 +651,7 @@ describe('default option prefix', () => {
 		});
 		
 		it('should contain stopper as content', () => {
-			const parsed = VCommandParser.parse('!mycommand "--"', {isLazy: true});
+			const parsed = VCommandParser.parse('!mycommand "--"', {lazy: true});
 			
 			parsed.doParseOptions();
 			
