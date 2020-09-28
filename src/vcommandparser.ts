@@ -17,6 +17,9 @@ export interface VCommonParserOptions {
 	 */
 	optionPrefix?: OptionPrefix;
 	
+	/**
+	 * When set to `true`, this option object will be of type `VLazyParserOptions`, otherwise, if left out or set to `false`, the type will be `VParserOptions`.
+	 */
 	lazy?: boolean;
 }
 
@@ -50,6 +53,10 @@ function mergeWithDefaultParserOptions<T extends VCommonParserOptions>(parserOpt
 	return {...defaultOptions, ...parserOptions};
 }
 
+/**
+ * Verifies if the given `parserOptions` contains values that are of not considered as lazy.
+ * @param parserOptions
+ */
 export function verifyParserOptionsIsNonLazy(parserOptions: RequiredParserOptions<VLazyParserOptions | VParserOptions>): parserOptions is Required<VCommonParserOptions> & VParserOptions {
 	return !parserOptions.lazy && (parserOptions.optionDefinitions == undefined || Array.isArray(parserOptions.optionDefinitions));
 }
