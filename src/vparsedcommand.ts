@@ -2,7 +2,7 @@ import OptionPrefix from './@types/OptionPrefix';
 import MessageOption from './message-option';
 import { extractOptionsFromParsedContent, VParsedMessage } from './message-parser';
 import OptionDef from './option-def';
-import { RequiredParserOptions, VLazyParserOptions, VParserOptions } from './vcommandparser';
+import { RequiredParserOptions, verifyParserOptionsIsNonLazy, VLazyParserOptions, VParserOptions } from './vcommandparser';
 
 export class VCommonParsedCommand {
 	readonly isCommand: boolean;
@@ -37,7 +37,7 @@ export class VCommonParsedCommand {
 			},
 		} = parsedMessage);
 		
-		if (Array.isArray(parsedMessage.parserOptions.optionDefinitions)) {
+		if (verifyParserOptionsIsNonLazy(parsedMessage.parserOptions)) {
 			this.optionDefinitions = parsedMessage.parserOptions.optionDefinitions;
 		}
 	}
