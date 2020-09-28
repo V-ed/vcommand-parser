@@ -67,9 +67,6 @@ export class VCommandParser {
 	/**
 	 * This function parses a string and gets the component if the string is in the format `{PREFIX}{COMMAND} [{content}] [{OPTION_PREFIX}{OPTION} [{OPTION_CONTENT}] [{content}]]*` (where anything between `[]` is optional, and an `*` means multiple times).
 	 *
-	 * This function lazily parses the message, meaning only the command is processed.
-	 * To process options, you can either use the `parsedCommand.doParseOptions()` function or set the option definitions using `parsedCommand.setOptionDefinitions(definitions)`.
-	 *
 	 * @param message String that potentially contains a command.
 	 *
 	 * @param parserOptions Options used to customize the behavior of the parser.
@@ -77,9 +74,25 @@ export class VCommandParser {
 	 * @example VCommandParser.parse('!command --option "Option content"')
 	 * @example VCommandParser.parse('%%command --option "Option content"', {commandPrefix: '%%'})
 	 *
-	 * @returns `VLazyParsedCommand` instance containing the results of the parsing.
+	 * @returns `VParsedCommand` instance containing the results of the parsing.
 	 */
 	static parse(message: string, parserOptions?: VParserOptions): VParsedCommand;
+	/**
+	 * This function parses a string and gets the component if the string is in the format `{PREFIX}{COMMAND} [{content}] [{OPTION_PREFIX}{OPTION} [{OPTION_CONTENT}] [{content}]]*` (where anything between `[]` is optional, and an `*` means multiple times).
+	 *
+	 * With the specified options, the message will be lazily parsed, meaning only the command is processed.
+	 * To process options, you can either use the `parsedCommand.doParseOptions()` function or set the option definitions using `parsedCommand.setOptionDefinitions(definitions)`.
+	 *
+	 * @param message String that potentially contains a command.
+	 *
+	 * @param parserOptions Options used to customize the behavior of the parser.
+	 *
+	 * @example VCommandParser.parse('!command --option "Option content"', {lazy: true})
+	 * @example VCommandParser.parse('%%command --option "Option content"', {commandPrefix: '%%', lazy: true})
+	 * @example VCommandParser.parse('!command --option "Option content"', {optionDefinitions: () => [...]})
+	 *
+	 * @returns `VLazyParsedCommand` instance containing the results of the parsing.
+	 */
 	static parse(message: string, parserOptions?: VLazyParserOptions): VLazyParsedCommand;
 	
 	static parse(message: string, parserOptions?: VLazyParserOptions | VParserOptions): VLazyParsedCommand | VParsedCommand {
