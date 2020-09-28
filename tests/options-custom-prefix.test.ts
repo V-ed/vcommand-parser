@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
-import VCommandParser from '../src/vcommandparser';
+import { VCommandParser } from '../src/vcommandparser';
 
 describe('custom option prefix', () => {
 	describe('Messages with basic options', () => {

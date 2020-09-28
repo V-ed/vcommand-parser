@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
-import VCommandParser from '../src/vcommandparser';
+import * as testParseMessage from '../src/index';
+import { VCommandParser } from '../src/vcommandparser';
 import VLazyParsedCommand, { VParsedCommand } from '../src/vparsedcommand';
+
+describe('Checking exported functions', () => {
+	it('should provide parseMessage as VCommandParser.parse', () => {
+		expect(testParseMessage.parseMessage).toBe(testParseMessage.VCommandParser.parse);
+	});
+});
 
 describe('Testing value types', () => {
 	it('parsed object should be of type VParsedCommand', () => {

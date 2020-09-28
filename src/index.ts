@@ -1,10 +1,11 @@
 import OptionPrefix from './@types/OptionPrefix';
 import MessageOption from './message-option';
 import OptionDef from './option-def';
-import VCommandParser from './vcommandparser';
+import { default as parseMessage, VCommandParser } from './vcommandparser';
 import { VLazyParsedCommand, VParsedCommand } from './vparsedcommand';
 
 export {
+	parseMessage,
 	VCommandParser,
 	VParsedCommand,
 	VLazyParsedCommand,
@@ -13,4 +14,4 @@ export {
 	MessageOption
 };
 
-export default VCommandParser;
+export default parseMessage;

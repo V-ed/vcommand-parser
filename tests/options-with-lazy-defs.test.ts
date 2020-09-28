@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
 import OptionDef from '../src/option-def';
-import VCommandParser from '../src/vcommandparser';
+import { VCommandParser } from '../src/vcommandparser';
 
 const optionDefinitions = [
 	new OptionDef('long', {description: 'This is my long description', acceptsContent: true}),

@@ -110,4 +110,4 @@ export class VCommandParser {
 	}
 }
 
-export default VCommandParser;
+export default VCommandParser.parse;
