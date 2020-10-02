@@ -27,9 +27,11 @@ export interface VLazyParserOptions extends VCommonParserOptions {
 	lazy?: true;
 	
 	/**
-	 * Function to return the array of option definitions that tells the parser how to map options and tweak some behaviors, such as if the option accepts content.
+	 * Array (or function to return the array) of option definitions that tells the parser how to map options and tweak some behaviors, such as if the option accepts content.
+	 *
+	 * Remember to use the `doParseOptions` method to parse these options!
 	 */
-	optionDefinitions?: (parsedCommand?: VLazyParsedCommand) => OptionDef[];
+	optionDefinitions?: OptionDef[] | ((parsedCommand?: VLazyParsedCommand) => OptionDef[]);
 }
 
 export interface VParserOptions extends VCommonParserOptions {
@@ -58,7 +60,7 @@ function mergeWithDefaultParserOptions<T extends VCommonParserOptions>(parserOpt
  * @param parserOptions
  */
 export function verifyParserOptionsIsNonLazy(parserOptions: RequiredParserOptions<VLazyParserOptions | VParserOptions>): parserOptions is Required<VCommonParserOptions> & VParserOptions {
-	return !parserOptions.lazy && (parserOptions.optionDefinitions == undefined || Array.isArray(parserOptions.optionDefinitions));
+	return !parserOptions.lazy && (typeof parserOptions.optionDefinitions != 'function');
 }
 function verifyParsedCommandType(parsedMessage: VParsedMessage<RequiredParserOptions<VLazyParserOptions | VParserOptions>>): parsedMessage is VParsedMessage<Required<VCommonParserOptions> & VParserOptions> {
 	return verifyParserOptionsIsNonLazy(parsedMessage.parserOptions);

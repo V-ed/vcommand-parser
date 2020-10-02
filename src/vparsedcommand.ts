@@ -2,7 +2,7 @@ import OptionPrefix from './@types/OptionPrefix';
 import MessageOption from './message-option';
 import { extractOptionsFromParsedContent, VParsedMessage } from './message-parser';
 import OptionDef from './option-def';
-import { RequiredParserOptions, verifyParserOptionsIsNonLazy, VLazyParserOptions, VParserOptions } from './vcommandparser';
+import { RequiredParserOptions, VLazyParserOptions, VParserOptions } from './vcommandparser';
 
 export class VCommonParsedCommand {
 	readonly isCommand: boolean;
@@ -37,7 +37,7 @@ export class VCommonParsedCommand {
 			},
 		} = parsedMessage);
 		
-		if (verifyParserOptionsIsNonLazy(parsedMessage.parserOptions)) {
+		if (typeof parsedMessage.parserOptions.optionDefinitions != 'function') {
 			this.optionDefinitions = parsedMessage.parserOptions.optionDefinitions;
 		}
 	}
@@ -107,7 +107,9 @@ export class VLazyParsedCommand extends VCommonParsedCommand {
 	constructor(message: string, parsedMessage: VParsedMessage<RequiredParserOptions<VLazyParserOptions>>) {
 		super(message, parsedMessage);
 		
-		this.optionDefinitionsGetter = parsedMessage.parserOptions.optionDefinitions;
+		if (typeof parsedMessage.parserOptions.optionDefinitions == 'function') {
+			this.optionDefinitionsGetter = parsedMessage.parserOptions.optionDefinitions;
+		}
 	}
 	
 	/**
@@ -116,7 +118,7 @@ export class VLazyParsedCommand extends VCommonParsedCommand {
 	 * This has no value if you called the `setOptionDefinitions` function before.
 	 */
 	doParseOptions(): void {
-		this.doExtractOptions(this.optionDefinitionsGetter && this.optionDefinitionsGetter(this));
+		this.doExtractOptions(this.optionDefinitions ?? (this.optionDefinitionsGetter && this.optionDefinitionsGetter(this)));
 	}
 }
 
