@@ -23,7 +23,13 @@ describe('Testing value types', () => {
 		expect(parsed instanceof VLazyParsedCommand).toBeTruthy();
 	});
 	
-	it('parsed object should be of type VLazyParsedCommand when custom optionDefs', () => {
+	it('parsed object should be of type VParsedCommand when custom optionDefs is array', () => {
+		const parsed = VCommandParser.parse('!mycommand', {optionDefinitions: []});
+		
+		expect(parsed instanceof VParsedCommand).toBeTruthy();
+	});
+	
+	it('parsed object should be of type VLazyParsedCommand when custom optionDefs is function', () => {
 		const parsed = VCommandParser.parse('!mycommand', {optionDefinitions: () => []});
 		
 		expect(parsed instanceof VLazyParsedCommand).toBeTruthy();
