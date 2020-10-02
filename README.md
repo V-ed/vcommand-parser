@@ -22,49 +22,65 @@ npm install vcommand-parser
 To use this utility, you can simply use the static functions provided by the `VCommandParser` class :
 
 ```typescript
-import VCommandParser from 'vcommand-parser';
+import parseMessage from 'vcommand-parser';
 
-const parsedCommand = VCommandParser.parse('!command');
+const parsedCommand = parseMessage('!command');
 ```
 
 ```typescript
-import VCommandParser from 'vcommand-parser';
+import parseMessage from 'vcommand-parser';
 
-const parsedCommand = VCommandParser.parse('!command --option');
+const parsedCommand = parseMessage('!command --option');
 ```
 
 ```typescript
-import VCommandParser from 'vcommand-parser';
+import parseMessage from 'vcommand-parser';
 
-const parsedCommand = VCommandParser.parse('!command -abc');
+const parsedCommand = parseMessage('!command -abc');
 ```
 
 In the last example above, there is three "short" options : `["a", "b", "c"]`.
 
+The default function `parseMessage` is an alias of the `VCommandParser.parse` static method. You can achieve the same result with this notation, depending on your preferences :
+
+```typescript
+import { VCommandParser } from 'vcommand-parser';
+
+const parsedCommand = VCommandParser.parse('!command');
+```
+
 The default command prefix is `!` and the default option prefix is `-`, which are both configurable, as shown below :
 
 ```typescript
-import VCommandParser from 'vcommand-parser';
+import { VCommandParser } from 'vcommand-parser';
 
-const parsedCommand = VCommandParser.parse('\\command', '\\');
+const parsedCommand = VCommandParser.parse('\\command', {
+    commandPrefix: '\\'
+});
 ```
 
 ```typescript
-import VCommandParser from 'vcommand-parser';
+import { VCommandParser } from 'vcommand-parser';
 
-const parsedCommand = VCommandParser.parse('\\command ~~option', '\\', '~');
+const parsedCommand = VCommandParser.parse('\\command ~~option', {
+    commandPrefix: '\\',
+    optionPrefix: '~'
+});
 ```
 
 ```typescript
-import VCommandParser from 'vcommand-parser';
+import { VCommandParser } from 'vcommand-parser';
 
-const parsedCommand = VCommandParser.parse('\\command ~abc', '\\', '~');
+const parsedCommand = VCommandParser.parse('\\command ~abc', {
+    commandPrefix: '\\',
+    optionPrefix: '~'
+});
 ```
 
 ### Dealing with parsed object
 
 ```typescript
-import VCommandParser from 'vcommand-parser';
+import { VCommandParser } from 'vcommand-parser';
 
 const parsedCommand = VCommandParser.parse('!command --option');
 
@@ -98,7 +114,7 @@ VParsedCommand {
 ### Dealing with parsed object and content
 
 ```typescript
-import VCommandParser from 'vcommand-parser';
+import { VCommandParser } from 'vcommand-parser';
 
 const parsedCommand = VCommandParser.parse('!command content --option "option content"');
 
@@ -134,7 +150,7 @@ Note in this example : since `"option content"` has a space in its content, you 
 ### Accessing options
 
 ```typescript
-import VCommandParser from 'vcommand-parser';
+import { VCommandParser } from 'vcommand-parser';
 
 const parsedCommand = VCommandParser.parse('!command content --option "option content"');
 
@@ -180,7 +196,7 @@ const definitions = [
   new OptionDef(['s', 'short'], {description: 'This is my short description', weight: 2})
 ];
 
-const parsedCommand = VCommandParser.parse('!command content -l "option content"', undefined, undefined, definitions);
+const parsedCommand = VCommandParser.parse('!command content -l "option content"', {optionDefinitions: definitions});
 
 console.log(parsedCommand);
 ```
@@ -237,7 +253,7 @@ new OptionDef('l', {description: 'This is my long description', acceptsContent: 
 
 ### Defining options lazily
 
-You may sometimes prefer to define the definitions after a basic parsing to get the command name and potentially the content too. You therefore have access to another static function in `VCommandParser` :
+You may sometimes prefer to define the definitions after a basic parsing to get the command name and potentially the content too. You can therefore use the option `lazy` to get this behavior :
 
 ```typescript
 import { VCommandParser, OptionDef } from 'vcommand-parser';
@@ -247,7 +263,7 @@ const definitions = [
   new OptionDef(['s', 'short'], {description: 'This is my short description', weight: 2})
 ];
 
-const parsedCommand = VCommandParser.parseLazy('!command content -l "option content"');
+const parsedCommand = VCommandParser.parse('!command content -l "option content"', {lazy: true});
 
 console.log(parsedCommand.command); // 'command'
 console.log(parsedCommand.content); // 'content -l "option content"'
@@ -269,7 +285,7 @@ The variable `parsedCommand` will therefore contain the same definitions as if y
 This package automatically determines if the given string is a command or not based on if the messages starts with the given command prefix.
 
 ```typescript
-import VCommandParser from 'vcommand-parser';
+import { VCommandParser } from 'vcommand-parser';
 
 const parsedCommand = VCommandParser.parse('this is a message');
 
@@ -294,7 +310,7 @@ VParsedCommand {
 When the message is not a command, options aren't parsed :
 
 ```typescript
-import VCommandParser from 'vcommand-parser';
+import { VCommandParser } from 'vcommand-parser';
 
 const parsedCommand = VCommandParser.parse('this is --a message');
 

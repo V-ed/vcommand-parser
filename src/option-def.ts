@@ -1,10 +1,10 @@
-type OptionBehavior = {
+export type OptionBehavior = {
 	acceptsContent: boolean,
 	weight: number,
 	description?: string,
 }
 
-export default class OptionDef {
+export class OptionDef {
 	static readonly DEFAULT_WEIGHT = 0;
 	
 	readonly calls: string[];
@@ -32,3 +32,5 @@ export default class OptionDef {
 		} = finalOptions);
 	}
 }
+
+export default OptionDef;

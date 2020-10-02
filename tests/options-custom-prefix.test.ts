@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
-import VCommandParser from '../src/vcommandparser';
+import { VCommandParser } from '../src/vcommandparser';
 
 describe('custom option prefix', () => {
 	describe('Messages with basic options', () => {
 		it('should contain one long option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~~long', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~~long', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -17,7 +17,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain one short option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~s', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~s', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -29,7 +29,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain two short option stickied', () => {
-			const parsed = VCommandParser.parse('!mycommand ~sh', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~sh', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -42,7 +42,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain five short option stickied', () => {
-			const parsed = VCommandParser.parse('!mycommand ~short', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~short', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -58,7 +58,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain two long option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~~long1 ~~long2', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~~long1 ~~long2', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -71,7 +71,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain three long option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~~long1 ~~long2 ~~long3', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~~long1 ~~long2 ~~long3', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -85,7 +85,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain two short option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~s ~h', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~s ~h', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -98,7 +98,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain three short option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~s ~h ~o', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~s ~h ~o', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -112,7 +112,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain four short option, 2 stickied groups', () => {
-			const parsed = VCommandParser.parse('!mycommand ~sh ~or', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~sh ~or', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -129,7 +129,7 @@ describe('custom option prefix', () => {
 	
 	describe('Messages with basic options and content', () => {
 		it('should contain one long option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~~long content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~~long content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -141,7 +141,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain one short option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~s content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~s content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -153,7 +153,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain two short option stickied', () => {
-			const parsed = VCommandParser.parse('!mycommand ~sh content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~sh content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -166,7 +166,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain five short option stickied', () => {
-			const parsed = VCommandParser.parse('!mycommand ~short content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~short content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -182,7 +182,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain two long option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~~long1 content1 ~~long2 content2', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~~long1 content1 ~~long2 content2', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -195,7 +195,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain three long option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~~long1 content1 ~~long2 content2 ~~long3 content3', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~~long1 content1 ~~long2 content2 ~~long3 content3', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -209,7 +209,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain three long option only one content', () => {
-			const parsed = VCommandParser.parse('!mycommand ~~long1 ~~long2 content ~~long3', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~~long1 ~~long2 content ~~long3', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -223,7 +223,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain two short option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~s content1 ~h content2', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~s content1 ~h content2', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -236,7 +236,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain three short option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~s content1 ~h content2 ~o content3', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~s content1 ~h content2 ~o content3', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -250,7 +250,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain three short option only one content', () => {
-			const parsed = VCommandParser.parse('!mycommand ~s ~h content ~o', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~s ~h content ~o', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -264,7 +264,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain four short option, 2 stickied groups', () => {
-			const parsed = VCommandParser.parse('!mycommand ~sh content1 ~or content2', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~sh content1 ~or content2', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -281,7 +281,7 @@ describe('custom option prefix', () => {
 	
 	describe('Messages with content and basic options and content', () => {
 		it('should contain one long option', () => {
-			const parsed = VCommandParser.parse('!mycommand mycontent ~~long content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand mycontent ~~long content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBe('mycontent');
 			
@@ -293,7 +293,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain one long option and spaced content', () => {
-			const parsed = VCommandParser.parse('!mycommand my content ~~long content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand my content ~~long content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBe('my content');
 			
@@ -305,7 +305,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain one long option content after', () => {
-			const parsed = VCommandParser.parse('!mycommand ~~long content mycontent', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~~long content mycontent', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBe('mycontent');
 			expect(parsed.options).toBeDefined();
@@ -316,7 +316,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain one long option and spaced content after', () => {
-			const parsed = VCommandParser.parse('!mycommand ~~long content my content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~~long content my content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBe('my content');
 			
@@ -328,7 +328,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain one short option', () => {
-			const parsed = VCommandParser.parse('!mycommand mcontent ~s content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand mcontent ~s content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBe('mcontent');
 			
@@ -340,7 +340,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain one short option and spaced content', () => {
-			const parsed = VCommandParser.parse('!mycommand my content ~s content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand my content ~s content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBe('my content');
 			
@@ -352,7 +352,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain one short option after', () => {
-			const parsed = VCommandParser.parse('!mycommand ~s content mcontent', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~s content mcontent', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBe('mcontent');
 			
@@ -364,7 +364,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain one short option and spaced content after', () => {
-			const parsed = VCommandParser.parse('!mycommand ~s content my content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~s content my content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBe('my content');
 			
@@ -376,7 +376,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain two short option stickied', () => {
-			const parsed = VCommandParser.parse('!mycommand ~sh content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~sh content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -389,7 +389,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain five short option stickied', () => {
-			const parsed = VCommandParser.parse('!mycommand ~short content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~short content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -405,7 +405,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain two long option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~~long1 content1 ~~long2 content2', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~~long1 content1 ~~long2 content2', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -418,7 +418,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain three long option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~~long1 content1 ~~long2 content2 ~~long3 content3', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~~long1 content1 ~~long2 content2 ~~long3 content3', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -432,7 +432,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain three long option only one content', () => {
-			const parsed = VCommandParser.parse('!mycommand ~~long1 ~~long2 content ~~long3', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~~long1 ~~long2 content ~~long3', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -446,7 +446,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain two short option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~s content1 ~h content2', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~s content1 ~h content2', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -459,7 +459,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain three short option', () => {
-			const parsed = VCommandParser.parse('!mycommand ~s content1 ~h content2 ~o content3', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~s content1 ~h content2 ~o content3', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -473,7 +473,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain three short option only one content', () => {
-			const parsed = VCommandParser.parse('!mycommand ~s ~h content ~o', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~s ~h content ~o', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -487,7 +487,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain four short option, 2 stickied groups', () => {
-			const parsed = VCommandParser.parse('!mycommand ~sh content1 ~or content2', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~sh content1 ~or content2', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBeUndefined();
 			
@@ -504,19 +504,19 @@ describe('custom option prefix', () => {
 	
 	describe('Messages with option stopper', () => {
 		it('should contain content only', () => {
-			const parsed = VCommandParser.parse('!mycommand ~~ content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~~ content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBe('content');
 		});
 		
 		it('should contain both content only', () => {
-			const parsed = VCommandParser.parse('!mycommand my ~~ content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand my ~~ content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBe('my content');
 		});
 		
 		it('should contain one long option and content', () => {
-			const parsed = VCommandParser.parse('!mycommand ~~long ~~ content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~~long ~~ content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBe('content');
 			
@@ -528,7 +528,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain one long option and option like content', () => {
-			const parsed = VCommandParser.parse('!mycommand ~~long ~~ ~~content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~~long ~~ ~~content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBe('~~content');
 			
@@ -540,7 +540,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain one short option and content', () => {
-			const parsed = VCommandParser.parse('!mycommand ~s ~~ content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~s ~~ content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBe('content');
 			
@@ -552,7 +552,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain one short option and option like content', () => {
-			const parsed = VCommandParser.parse('!mycommand ~s ~~ ~~content', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand ~s ~~ ~~content', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBe('~~content');
 			
@@ -564,7 +564,7 @@ describe('custom option prefix', () => {
 		});
 		
 		it('should contain stopper as content', () => {
-			const parsed = VCommandParser.parse('!mycommand "~~"', undefined, '~');
+			const parsed = VCommandParser.parse('!mycommand "~~"', {optionPrefix: '~'});
 			
 			expect(parsed.content).toBe('~~');
 		});

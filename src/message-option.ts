@@ -1,6 +1,6 @@
 import OptionDef from './option-def';
 
-export default class MessageOption {
+export class MessageOption {
 	readonly name: string;
 	readonly content?: string;
 	
@@ -15,3 +15,5 @@ export default class MessageOption {
 		this.definition = definition;
 	}
 }
+
+export default MessageOption;
