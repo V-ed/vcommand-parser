@@ -14,7 +14,7 @@ export type VParsedMessage<T extends VLazyParserOptions | VParserOptions> = {
 	duplicatedOptions?: MessageOption[];
 }
 
-export function parseMessage(message: string, parserOptions: RequiredParserOptions<VLazyParserOptions | VParserOptions>): VParsedMessage<RequiredParserOptions<VLazyParserOptions | VParserOptions>> {
+export function doParseMessage(message: string, parserOptions: RequiredParserOptions<VLazyParserOptions | VParserOptions>): VParsedMessage<RequiredParserOptions<VLazyParserOptions | VParserOptions>> {
 	const extractedData = extractCommandAndContent(message, parserOptions.commandPrefix);
 	
 	const extractedOptions: ParsedOptions | Record<string, unknown> = verifyParserOptionsIsNonLazy(parserOptions) && extractedData.isCommand && extractedData.content
@@ -165,4 +165,4 @@ export function extractOptionsFromParsedContent(content: string, optionPrefix: O
 	};
 }
 
-export default parseMessage;
+export default doParseMessage;

@@ -1,5 +1,5 @@
 import OptionPrefix from './@types/OptionPrefix';
-import { parseMessage, VParsedMessage } from './message-parser';
+import { doParseMessage, VParsedMessage } from './message-parser';
 import OptionDef from './option-def';
 import { VLazyParsedCommand, VParsedCommand } from './vparsedcommand';
 
@@ -105,7 +105,7 @@ export class VCommandParser {
 	static parse(message: string, parserOptions?: VLazyParserOptions | VParserOptions): VLazyParsedCommand | VParsedCommand {
 		const options = mergeWithDefaultParserOptions(parserOptions);
 		
-		const parsedMessage = parseMessage(message, options);
+		const parsedMessage = doParseMessage(message, options);
 		
 		if (verifyParsedCommandType(parsedMessage)) {
 			return new VParsedCommand(message, parsedMessage);
