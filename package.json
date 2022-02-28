@@ -42,7 +42,7 @@
   },
   "homepage": "https://github.com/V-ed/vcommand-parser#readme",
   "devDependencies": {
-    "@types/jest": "27.4.0",
+    "@types/jest": "27.4.1",
     "@types/node": "16.11.24",
     "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.33.0",
